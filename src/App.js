@@ -412,23 +412,25 @@ function App() {
             <div className='projects'>
               <div style={{ backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', marginBottom: '30px', fontSize: isMobile() ? '20px' : '30px' }}>
                 Meus Projetos
-                <Tooltip
-                  title={'Em meus projetos, você notará que, ao clicar, uma mensagem informa que o site é privado. Isso ocorre porque é um serviço restrito, acessível apenas com login e senha para usuários específicos. Por isso, adicionei imagens que permitem uma visualização detalhada: basta passar o mouse sobre elas para conferir melhor os detalhes da interface.'}
-                  PopperProps={{
-                    sx: {
-                      [`& .MuiTooltip-tooltip`]: {
-                        fontSize: '14px',
-                        fontWeight: 'bold',
-                        // padding: '10px',
-                        background: '#000000aa',
-                        // maxWidth: 'none',
+                {!isMobile() && (
+                  <Tooltip
+                    title={'Em meus projetos, você notará que, ao clicar, uma mensagem informa que o site é privado. Isso ocorre porque é um serviço restrito, acessível apenas com login e senha para usuários específicos. Por isso, adicionei imagens que permitem uma visualização detalhada: basta passar o mouse sobre elas para conferir melhor os detalhes da interface.'}
+                    PopperProps={{
+                      sx: {
+                        [`& .MuiTooltip-tooltip`]: {
+                          fontSize: '14px',
+                          fontWeight: 'bold',
+                          // padding: '10px',
+                          background: '#000000aa',
+                          // maxWidth: 'none',
+                        },
                       },
-                    },
-                  }}
-                  placement="right"
-                >
-                  <InfoOutlinedIcon sx={{ pl: 2, mb: '-3px', fontSize: '22px', cursor: 'pointer' }} />
-                </Tooltip>
+                    }}
+                    placement="right"
+                  >
+                    <InfoOutlinedIcon sx={{ pl: 2, mb: '-3px', fontSize: '22px', cursor: 'pointer' }} />
+                  </Tooltip>
+                )}
               </div>
               {/* First Swiper */}
               <Swiper
