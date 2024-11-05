@@ -143,6 +143,16 @@ function App() {
     }
   };
 
+  const redirectHandle = (mode) => {
+    if (mode === 'linkedln') {
+      window.open('https://www.linkedin.com/in/bruno-leonardi-705875180?', '_blank');
+    } else if (mode === 'whatsapp') {
+      window.open('https://wa.me/5511941182631', '_blank');
+    } else {
+      window.open('mailto:bruno_m_leonardi@hotmail.com', '_blank');
+    }
+  }
+
   return (
     <div className='home-page'>
       {!isMobile() && (
@@ -170,11 +180,11 @@ function App() {
             </div>
             <div className='contactDesc'>
               Meu nome é Bruno Leonardi, eu sou desenvolvedor há 3 anos, desenvolvo diversos tipos de páginas, buscando estilos modernos e inovadores
-              <button className='contactButton'>Entre em contato</button>
+              <button onClick={() => redirectHandle('email')} className='contactButton'>Entre em contato</button>
               <div className='buttonsContact'>
-                <img src='https://cdn-icons-png.flaticon.com/256/61/61109.png'></img>
-                <img src='https://static-00.iconduck.com/assets.00/whatsapp-icon-495x512-y1nyb5ge.png'></img>
-                <img src='https://cdn-icons-png.flaticon.com/512/561/561188.png'></img>
+                <img onClick={() => redirectHandle('linkedln')} src='https://cdn-icons-png.flaticon.com/256/61/61109.png'></img>
+                <img onClick={() => redirectHandle('whatsapp')} src='https://static-00.iconduck.com/assets.00/whatsapp-icon-495x512-y1nyb5ge.png'></img>
+                <img onClick={() => redirectHandle('email')} src='https://cdn-icons-png.flaticon.com/512/561/561188.png'></img>
                 {/* <EmailIcon sx={{fontSize: '33px', marginBottom: '-4px', cursor: 'pointer'}} /> */}
               </div>
             </div>
@@ -414,7 +424,7 @@ function App() {
                 Meus Projetos
                 {!isMobile() && (
                   <Tooltip
-                    title={'Em meus projetos, você notará que, ao clicar, uma mensagem informa que o site é privado. Isso ocorre porque é um serviço restrito, acessível apenas com login e senha para usuários específicos. Por isso, adicionei imagens que permitem uma visualização detalhada: basta passar o mouse sobre elas para conferir melhor os detalhes da interface.'}
+                    title={'Em meus projetos, você notará que em algumas imagens, ao clicar, uma mensagem informa que o site é privado. Isso ocorre porque é um serviço restrito, acessível apenas com login e senha para usuários específicos. Por isso, adicionei imagens que permitem uma visualização detalhada: basta passar o mouse sobre elas para conferir melhor os detalhes da interface.'}
                     PopperProps={{
                       sx: {
                         [`& .MuiTooltip-tooltip`]: {

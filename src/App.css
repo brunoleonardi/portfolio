@@ -145,7 +145,7 @@
 }
 
 .navigation-hub {
-    background: #181818;
+    background: #222;
     /* backdrop-filter: blur(10px); */
     position: absolute;
     display: flex;
@@ -157,7 +157,7 @@
     border-radius: 30px;
     padding: 0px 6px;
     /* width: 250px; */
-    gap: 30px;
+    gap: 10px;
     z-index: 11;
     overflow: hidden;
 }
@@ -455,6 +455,7 @@
     }
 
     .navigation-hub {
+        background: #181818;
         right: 50%;
         top: auto;
         bottom: 10px;
