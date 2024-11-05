@@ -612,3 +612,14 @@
         border-radius: 30px;
     }
 }
+
+iframe,
+.vercel-feedback,
+.vercel-widget,
+.vercel-support {
+    display: none !important;
+}
+
+#feedback-toolbar {
+    display: none !important;
+}
