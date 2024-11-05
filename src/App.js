@@ -144,14 +144,19 @@ function App() {
   };
 
   const redirectHandle = (mode) => {
-    if (mode === 'linkedln') {
-      window.open('https://www.linkedin.com/in/bruno-leonardi-705875180?', '_blank');
-    } else if (mode === 'whatsapp') {
-      window.open('https://wa.me/5511941182631', '_blank');
-    } else {
-      window.open('mailto:bruno_m_leonardi@hotmail.com', '_blank');
-    }
-  }
+    const urls = {
+      linkedln: 'https://www.linkedin.com/in/bruno-leonardi-705875180',
+      whatsapp: 'https://wa.me/5511941182631',
+      email: 'mailto:bruno_m_leonardi@hotmail.com'
+    };
+
+    // Create a temporary link element and click it
+    const link = document.createElement('a');
+    link.href = urls[mode] || urls.email;
+    link.target = '_blank';
+    link.click();
+  };
+
 
   return (
     <div className='home-page'>
@@ -348,11 +353,11 @@ function App() {
                   </div>
                   <div className='contactDesc'>
                     Meu nome é Bruno Leonardi, eu sou desenvolvedor há 3 anos, desenvolvo diversos tipos de páginas, buscando estilos modernos e inovadores
-                    <button className='contactButton'>Entre em contato</button>
+                    <button onClick={() => redirectHandle('email')} className='contactButton'>Entre em contato</button>
                     <div className='buttonsContact'>
-                      <img src='https://cdn-icons-png.flaticon.com/256/61/61109.png'></img>
-                      <img src='https://static-00.iconduck.com/assets.00/whatsapp-icon-495x512-y1nyb5ge.png'></img>
-                      <img src='https://cdn-icons-png.flaticon.com/512/561/561188.png'></img>
+                      <img onClick={() => redirectHandle('linkedln')} src='https://cdn-icons-png.flaticon.com/256/61/61109.png'></img>
+                      <img onClick={() => redirectHandle('whatsapp')} src='https://static-00.iconduck.com/assets.00/whatsapp-icon-495x512-y1nyb5ge.png'></img>
+                      <img onClick={() => redirectHandle('email')} src='https://cdn-icons-png.flaticon.com/512/561/561188.png'></img>
                       {/* <EmailIcon sx={{fontSize: '33px', marginBottom: '-4px', cursor: 'pointer'}} /> */}
                     </div>
                   </div>
