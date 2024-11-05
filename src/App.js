@@ -13,7 +13,10 @@ import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import HelpIcon from '@mui/icons-material/Help';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import EmailIcon from '@mui/icons-material/Email';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
+import minhaFoto from './assets/minhaFoto.jpeg';
 import bim1 from './assets/bim1.png';
 import bim2 from './assets/bim2.png';
 import bim3 from './assets/bim3.png';
@@ -39,13 +42,20 @@ import 'swiper/css/pagination';
 
 import { EffectCoverflow, Pagination, Autoplay } from 'swiper/modules';
 
+export const isMobile = () => {
+  const isMobileDevice = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(
+    navigator.userAgent
+  );
+  return isMobileDevice
+}
+
 function App() {
   const sectionRefs = useRef([]);
   const swiper1Ref = useRef(null);
   const swiper2Ref = useRef(null);
   const swiper3Ref = useRef(null);
   const [currentSection, setCurrentSection] = useState(null);
-  const [viewMode, setViewMode] = useState();
+  const [viewMode, setViewMode] = useState(isMobile() ? 'Desenvolvedor Front-End' : undefined);
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -83,11 +93,12 @@ function App() {
     const section = sectionRefs.current[index];
     if (section) {
       section.scrollIntoView({
-        behavior: 'smooth',  // Smooth scroll effect
-        block: 'start',      // Scroll to the start of the section
+        behavior: 'smooth',
+        block: 'start',
       });
     }
   };
+
 
   function shuffle(array) {
     let currentIndex = array.length, randomIndex;
@@ -134,63 +145,240 @@ function App() {
 
   return (
     <div className='home-page'>
-      <div style={{ position: "absolute", width: "100%", height: "100%" }}>
-        <TerrainScene />
-      </div>
-      <div style={{ width: '50vw' }}></div>
-      <div className='contact' style={contactStyle} />
-      <div className='contactInfos'>
-        <div className='contactTitle'>
-          <ReactTyped
-            strings={[
-              '<strong>Desenvolvedor</strong> Front-End.',
-              '<strong>Desenvolvedor</strong> Freelance.',
-              '<strong>Designer</strong> de Interfaces.',
-              'Entre em <strong>Contato</strong>.'
-            ]}
-            typeSpeed={40}
-            backSpeed={50}
-            loop
-          />
+      {!isMobile() && (
+        <div style={{ position: "absolute", width: "100%", height: "100%" }}>
+          <TerrainScene />
         </div>
-        <div className='contactDesc'>
-          Meu nome é Bruno Leonardi, eu sou desenvolvedor há 3 anos, desenvolvo diversos tipos de páginas, buscando estilos modernos e inovadores
-          <button className='contactButton'>Entre em contato</button>
-        </div>
-      </div>
-      <div className='navigation-hub'>
-        <IconButton
-          className={currentSection === '1' ? 'iconActivated' : ''}
-          style={{ transition: '.8s' }}
-          onClick={() => scrollToSection(0)}
-        >
-          <HomeIcon />
-        </IconButton>
-        <IconButton
-          className={currentSection === '2' ? 'iconActivated' : ''}
-          style={{ transition: '.8s' }}
-          onClick={() => scrollToSection(1)}
-        >
-          <PersonIcon />
-        </IconButton>
-        <IconButton
+      )}
+      {!isMobile() && (
+        <>
+          <div style={{ width: '50vw' }}></div>
+          <div className='contact' style={contactStyle} />
+          <div className='contactInfos'>
+            <div className='contactTitle'>
+              <ReactTyped
+                strings={[
+                  '<strong>Desenvolvedor</strong> Front-End.',
+                  '<strong>Desenvolvedor</strong> Freelance.',
+                  '<strong>Designer</strong> de Interfaces.',
+                  'Entre em <strong>Contato</strong>.'
+                ]}
+                typeSpeed={40}
+                backSpeed={50}
+                loop
+              />
+            </div>
+            <div className='contactDesc'>
+              Meu nome é Bruno Leonardi, eu sou desenvolvedor há 3 anos, desenvolvo diversos tipos de páginas, buscando estilos modernos e inovadores
+              <button className='contactButton'>Entre em contato</button>
+              <div className='buttonsContact'>
+                <img src='https://cdn-icons-png.flaticon.com/256/61/61109.png'></img>
+                <img src='https://static-00.iconduck.com/assets.00/whatsapp-icon-495x512-y1nyb5ge.png'></img>
+                <img src='https://cdn-icons-png.flaticon.com/512/561/561188.png'></img>
+                {/* <EmailIcon sx={{fontSize: '33px', marginBottom: '-4px', cursor: 'pointer'}} /> */}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+      {isMobile() ? (
+        <div className='navigation-hub'>
+          <Tooltip
+            title={'Início'}
+            PopperProps={{
+              sx: {
+                [`& .MuiTooltip-tooltip`]: {
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  padding: '10px',
+                  background: '#0000004a',
+                  maxWidth: 'none',
+                },
+              },
+            }}
+            placement="bottom"
+          >
+            <IconButton
+              className={currentSection === '1' ? 'iconActivated' : ''}
+              style={{ transition: '.8s' }}
+              onClick={() => scrollToSection(0)}
+            >
+              <HomeIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip
+            title={'Início'}
+            PopperProps={{
+              sx: {
+                [`& .MuiTooltip-tooltip`]: {
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  padding: '10px',
+                  background: '#0000004a',
+                  maxWidth: 'none',
+                },
+              },
+            }}
+            placement="bottom"
+          >
+            <IconButton
+              className={currentSection === '2' ? 'iconActivated' : ''}
+              style={{ transition: '.8s' }}
+              onClick={() => scrollToSection(1)}
+            >
+              <PersonIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip
+            title={'Projetos'}
+            PopperProps={{
+              sx: {
+                [`& .MuiTooltip-tooltip`]: {
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  padding: '10px',
+                  background: '#0000004a',
+                  maxWidth: 'none',
+                },
+              },
+            }}
+            placement="bottom"
+          >
+            <IconButton
+              className={currentSection === '3' ? 'iconActivated' : ''}
+              style={{ transition: '.8s' }}
+              onClick={() => scrollToSection(2)}
+            >
+              <AccountTreeOutlinedIcon />
+            </IconButton>
+          </Tooltip>
+          {/* <IconButton
           className={currentSection === '3' ? 'iconActivated' : ''}
           style={{ transition: '.8s' }}
           onClick={() => scrollToSection(2)}
         >
           <HelpIcon />
-        </IconButton>
-      </div>
+        </IconButton> */}
+        </div>
+      ) : (
+        <div className='navigation-hub'>
+          <Tooltip
+            title={'Início'}
+            PopperProps={{
+              sx: {
+                [`& .MuiTooltip-tooltip`]: {
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  padding: '10px',
+                  background: '#0000004a',
+                  maxWidth: 'none',
+                },
+              },
+            }}
+            placement="bottom"
+          >
+            <IconButton
+              className={currentSection === '1' ? 'iconActivated' : ''}
+              style={{ transition: '.8s' }}
+              onClick={() => scrollToSection(0)}
+            >
+              <HomeIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip
+            title={'Projetos'}
+            PopperProps={{
+              sx: {
+                [`& .MuiTooltip-tooltip`]: {
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  padding: '10px',
+                  background: '#0000004a',
+                  maxWidth: 'none',
+                },
+              },
+            }}
+            placement="bottom"
+          >
+            <IconButton
+              className={currentSection === '2' ? 'iconActivated' : ''}
+              style={{ transition: '.8s' }}
+              onClick={() => scrollToSection(1)}
+            >
+              <AccountTreeOutlinedIcon />
+            </IconButton>
+          </Tooltip>
+          {/* <IconButton
+          className={currentSection === '3' ? 'iconActivated' : ''}
+          style={{ transition: '.8s' }}
+          onClick={() => scrollToSection(2)}
+        >
+          <HelpIcon />
+        </IconButton> */}
+        </div>
+      )}
       <div className='info-area'>
         <div className="scroll-container">
-          <div data-index="1" ref={(el) => (sectionRefs.current[0] = el)} className="section cards-section">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', width: "50%", flexDirection: "column", gap: '20px' }}>
-              <InfoCard setViewMode={setViewMode} title={'Desenvolvedor Front-End'} icon={<CodeIcon />} />
-              <InfoCard setViewMode={setViewMode} title={'Designer de Interfaces'} icon={<BrushOutlinedIcon />} />
-              <InfoCard setViewMode={setViewMode} title={'Serviços Oferecidos'} icon={<WorkOutlineOutlinedIcon />} />
-              <InfoCard setViewMode={setViewMode} title={'Certificações e Cursos'} icon={<TaskOutlinedIcon />} />
-              <InfoCard scrollToSection={scrollToSection} setViewMode={setViewMode} title={'Meus Projetos'} icon={<AccountTreeOutlinedIcon />} />
+          {isMobile() && (
+            <div data-index="1" ref={(el) => (sectionRefs.current[0] = el)} className="section" style={{ flexDirection: "column" }}>
+              <div className='contact'>
+                <div className='contactInfos'>
+                  <div className='contactTitle'>
+                    <ReactTyped
+                      strings={[
+                        '<strong>Desenvolvedor</strong> Front-End.',
+                        '<strong>Desenvolvedor</strong> Freelance.',
+                        '<strong>Designer</strong> de Interfaces.',
+                        'Entre em <strong>Contato</strong>.'
+                      ]}
+                      typeSpeed={40}
+                      backSpeed={50}
+                      loop
+                    />
+                  </div>
+                  <div className='contactDesc'>
+                    Meu nome é Bruno Leonardi, eu sou desenvolvedor há 3 anos, desenvolvo diversos tipos de páginas, buscando estilos modernos e inovadores
+                    <button className='contactButton'>Entre em contato</button>
+                    <div className='buttonsContact'>
+                      <img src='https://cdn-icons-png.flaticon.com/256/61/61109.png'></img>
+                      <img src='https://static-00.iconduck.com/assets.00/whatsapp-icon-495x512-y1nyb5ge.png'></img>
+                      <img src='https://cdn-icons-png.flaticon.com/512/561/561188.png'></img>
+                      {/* <EmailIcon sx={{fontSize: '33px', marginBottom: '-4px', cursor: 'pointer'}} /> */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className='defaultHub'>
+                <div className='defaultPic'>
+                  <img src={minhaFoto} alt='myPic'></img>
+                </div>
+                <div className='defaultIntrodution' >Oi! Sou Bruno, desenvolvedor e designer.</div>
+              </div>
             </div>
+          )}
+          <div data-index={!isMobile() ? "1" : "2"} ref={(el) => !isMobile() ? (sectionRefs.current[0] = el) : (sectionRefs.current[1] = el)} className="section cards-section">
+            {isMobile() ? (
+              <div style={{ display: "flex", flexDirection: 'column', justifyContent: 'center', alignItems: "center" }}>
+                <div style={{ width: '110px', textAlign: "center", backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', transform: 'translateY(-20px)', fontSize: isMobile() ? '20px' : '30px', color: '#fff' }}>
+                  Sobre Mim
+                </div>
+                <div className='infoCardsSetup'>
+                  <InfoCard setViewMode={setViewMode} viewMode={viewMode} title={'Desenvolvedor Front-End'} icon={<CodeIcon />} />
+                  <InfoCard setViewMode={setViewMode} viewMode={viewMode} title={'Designer de Interfaces'} icon={<BrushOutlinedIcon />} />
+                  <InfoCard setViewMode={setViewMode} viewMode={viewMode} title={'Serviços Oferecidos'} icon={<WorkOutlineOutlinedIcon />} />
+                  <InfoCard setViewMode={setViewMode} viewMode={viewMode} title={'Certificações e Cursos'} icon={<TaskOutlinedIcon />} />
+                  <InfoCard scrollToSection={scrollToSection} setViewMode={setViewMode} title={'Meus Projetos'} icon={<AccountTreeOutlinedIcon />} />
+                </div>
+              </div>
+            ) : (
+              <div className='infoCardsSetup'>
+                <InfoCard setViewMode={setViewMode} viewMode={viewMode} title={'Desenvolvedor Front-End'} icon={<CodeIcon />} />
+                <InfoCard setViewMode={setViewMode} viewMode={viewMode} title={'Designer de Interfaces'} icon={<BrushOutlinedIcon />} />
+                <InfoCard setViewMode={setViewMode} viewMode={viewMode} title={'Serviços Oferecidos'} icon={<WorkOutlineOutlinedIcon />} />
+                <InfoCard setViewMode={setViewMode} viewMode={viewMode} title={'Certificações e Cursos'} icon={<TaskOutlinedIcon />} />
+                <InfoCard scrollToSection={scrollToSection} setViewMode={setViewMode} title={'Meus Projetos'} icon={<AccountTreeOutlinedIcon />} />
+              </div>
+            )}
             {viewMode ? (
               viewMode === 'Desenvolvedor Front-End' ? (
                 <div className='introdutionText'>
@@ -209,20 +397,44 @@ function App() {
                   Sou formado em <strong>Análise e Desenvolvimento de Sistemas</strong> pela <strong>Universidade São Judas Tadeu</strong>, onde me graduei em 2021. Finalizei minha pós-graduação em <strong>User Experience (UX)</strong> em 2024, onde aprofundei meus conhecimentos em <strong>design de interfaces</strong> e <strong>usabilidade</strong>. Além disso, concluí diversos cursos adicionais nas áreas de <strong>React</strong>, <strong>JavaScript</strong>, <strong>CSS</strong> e <strong>design</strong>, aprimorando ainda mais minhas habilidades técnicas.
                 </div>
               )
+            ) : isMobile() ? (
+              <div></div>
             ) : (
               <div className='defaultHub'>
-                <img src='https://plus.unsplash.com/premium_photo-1689530775582-83b8abdb5020?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmFuZG9tJTIwcGVyc29ufGVufDB8fDB8fHww' alt='myPic'></img>
+                <div className='defaultPic'>
+                  <img src={minhaFoto} alt='myPic'></img>
+                </div>
                 <div className='defaultIntrodution' >Oi! Sou Bruno, desenvolvedor e designer.</div>
               </div>
             )}
           </div>
-          <div data-index="2" ref={(el) => (sectionRefs.current[1] = el)} className="section">
+          <div data-index={!isMobile() ? "2" : "3"} ref={(el) => !isMobile() ? (sectionRefs.current[1] = el) : (sectionRefs.current[2] = el)} className="section">
             <div className='projects'>
+              <div style={{ backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', marginBottom: '30px', fontSize: isMobile() ? '20px' : '30px' }}>
+                Meus Projetos
+                <Tooltip
+                  title={'Em meus projetos, você notará que, ao clicar, uma mensagem informa que o site é privado. Isso ocorre porque é um serviço restrito, acessível apenas com login e senha para usuários específicos. Por isso, adicionei imagens que permitem uma visualização detalhada: basta passar o mouse sobre elas para conferir melhor os detalhes da interface.'}
+                  PopperProps={{
+                    sx: {
+                      [`& .MuiTooltip-tooltip`]: {
+                        fontSize: '14px',
+                        fontWeight: 'bold',
+                        // padding: '10px',
+                        background: '#000000aa',
+                        // maxWidth: 'none',
+                      },
+                    },
+                  }}
+                  placement="right"
+                >
+                  <InfoOutlinedIcon sx={{ pl: 2, mb: '-3px', fontSize: '22px', cursor: 'pointer' }} />
+                </Tooltip>
+              </div>
               {/* First Swiper */}
               <Swiper
                 grabCursor={true}
                 // centeredSlides={true}
-                slidesPerView={4}
+                slidesPerView={isMobile() ? 2 : 4}
                 loop={true}
                 coverflowEffect={{
                   rotate: 50,
@@ -275,6 +487,8 @@ function App() {
                           },
                         ],
                         sx: {
+                          display: isMobile() ? 'none' : 'flex',
+                          pointerEvents: 'none', // Add this line
                           [`& .MuiTooltip-tooltip`]: {
                             fontSize: '12px',
                             padding: '3px',
@@ -303,8 +517,8 @@ function App() {
               {/* Second Swiper */}
               <Swiper
                 grabCursor={true}
-                // centeredSlides={true}
-                slidesPerView={4}
+                centeredSlides={true}
+                slidesPerView={isMobile() ? 2 : 4}
                 loop={true}
                 coverflowEffect={{
                   rotate: 50,
@@ -355,6 +569,8 @@ function App() {
                           },
                         ],
                         sx: {
+                          display: isMobile() ? 'none' : 'flex',
+                          pointerEvents: 'none', // Add this line
                           [`& .MuiTooltip-tooltip`]: {
                             fontSize: '12px',
                             padding: '3px',
@@ -384,7 +600,7 @@ function App() {
               <Swiper
                 grabCursor={true}
                 // centeredSlides={true}
-                slidesPerView={4}
+                slidesPerView={isMobile() ? 2 : 4}
                 loop={true}
                 coverflowEffect={{
                   rotate: 50,
@@ -437,6 +653,8 @@ function App() {
                           },
                         ],
                         sx: {
+                          display: isMobile() ? 'none' : 'flex',
+                          pointerEvents: 'none', // Add this line
                           [`& .MuiTooltip-tooltip`]: {
                             fontSize: '12px',
                             padding: '3px',
@@ -464,9 +682,6 @@ function App() {
             </div>
 
           </div>
-          <div data-index="3" ref={(el) => (sectionRefs.current[2] = el)} className="section">
-            <h1>Section 3</h1>
-          </div>
         </div>
       </div>
       <Dialog open={open} onClose={handleClose}>
@@ -478,7 +693,7 @@ function App() {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </div >
   );
 }
 

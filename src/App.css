@@ -124,17 +124,42 @@
     right: -50px;
 }
 
+.buttonsContact {
+    width: 300px;
+}
+
+.buttonsContact img,
+.buttonsContact svg {
+    margin-right: 20px;
+    transition: .4s;
+}
+
+.buttonsContact *:hover {
+    transform: scale(1.2);
+}
+
+.buttonsContact img {
+    width: 25px;
+    /* filter: grayscale(1) ; */
+    cursor: pointer;
+}
+
 .navigation-hub {
+    background: #181818;
+    /* backdrop-filter: blur(10px); */
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    right: 0px;
-    top: 0px;
-    height: 70px;
-    width: 350px;
-    gap: 70px;
+    right: 55px;
+    top: 10px;
+    height: 40px;
+    border-radius: 30px;
+    padding: 0px 6px;
+    /* width: 250px; */
+    gap: 30px;
     z-index: 11;
+    overflow: hidden;
 }
 
 .navigation-hub>*>* {
@@ -142,6 +167,9 @@
 }
 
 .iconActivated {
+    /* padding: 3px 10px !important; */
+    border-radius: 10px !important;
+    background: #5c5c4a !important;
     transform: scale(1.3);
 }
 
@@ -205,6 +233,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    gap: 10px;
 }
 
 .defaultHub {
@@ -219,12 +248,27 @@
     gap: 30px;
 }
 
-.defaultHub img {
+.defaultPic {
     border: 3px solid #fff;
     border-radius: 50%;
     height: 300px;
     width: 300px;
+    /* transform: scale(2); */
     object-fit: cover;
+    overflow: hidden;
+}
+
+.defaultPic img {
+    height: 100%;
+    width: 100%;
+    /* transform: scale(1.8) translateY(15px); */
+    transform: scale(2.5) translateY(33px) translateX(7px);
+    object-fit: cover;
+    transition: .4s;
+}
+
+.defaultPic img:hover {
+    transform: scale(2) translateY(33px) translateX(7px);
 }
 
 .defaultIntrodution {
@@ -288,6 +332,15 @@
     font-size: 2rem;
 }
 
+.infoCardsSetup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .info-card {
     width: 100%;
     height: 90px;
@@ -302,6 +355,15 @@
     align-items: center;
     box-shadow: 5px 5px 10px #0000002b;
     transition: .4s;
+}
+
+.info-card.activated {
+    transform: scale(1.05);
+    background: #fff;
+}
+
+.info-card.activated .info-setup .card-title {
+    font-weight: bold;
 }
 
 .info-card:active {
@@ -367,19 +429,185 @@
     /* Increase zoom to 40% on hover */
 }
 
+.swiper-wrapper {
+    gap: 10px;
+}
+
 .swiper-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* border-radius: 8px; */
-    /* transform: scale(1.4); */
     overflow: hidden;
-    border: 2px solid #222;
-    /* Increase zoom to 40% on hover */
+    /* border: 2px solid #222; */
+    border-radius: 30px;
 }
 
 .swiper-pagination-bullet-active {
     color: #fff;
     background: #fff !important;
     border: 2px solid #000;
+}
+
+@media (max-width: 768px) {
+    .home-page {
+        flex-direction: column;
+        width: 100vw;
+    }
+
+    .navigation-hub {
+        right: 50%;
+        top: auto;
+        bottom: 10px;
+        height: 45px;
+        gap: 10px;
+        border-radius: 14px;
+        transform: translateX(50%);
+    }
+
+    .navigation-hub svg {
+        font-size: 18px;
+    }
+
+    .contact {
+        /* border-radius: 30% 40% 60% 40%; */
+        border-radius: 0px 0px 100px 100px;
+        margin-bottom: 20px;
+        width: 90vw;
+        height: 40vh;
+        position: relative;
+        left: auto;
+        top: auto;
+    }
+
+    .contactInfos {
+        margin-left: 0px;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        gap: 30px;
+    }
+
+    .contactTitle {
+        width: 80%;
+        max-height: 20px;
+        font-size: 20px;
+    }
+
+    .contactDesc {
+        font-size: 16px;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .contactButton {
+        width: 150px;
+        height: 40px;
+        font-size: 14px;
+    }
+
+    .buttonsContact {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .buttonsContact img {
+        margin-right: 0px;
+        width: 18px;
+    }
+
+    .info-area {
+        width: 100vw;
+    }
+
+    .cards-section {
+        padding: 0px;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .infoCardsSetup {
+        /* margin-top: -100px; */
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+
+    .info-card {
+        height: 60px;
+        width: 45%;
+        padding: 10px 0px;
+        gap: 0px;
+    }
+
+    .icon-border {
+        width: 30px;
+        height: 30px;
+        /* margin-left: -10px; */
+        margin-right: 10px;
+    }
+
+    .icon-border svg {
+        font-size: 20px;
+    }
+
+    .info-setup {
+        gap: 10px;
+    }
+
+
+    .card-title {
+        font-size: 12px;
+    }
+
+    .card-content {
+        font-size: 11px;
+    }
+
+    .defaultHub {
+        height: 50vh;
+        margin: 0px;
+        padding: 0px;
+        width: 50%;
+        gap: 30px;
+        margin-bottom: 70px;
+    }
+
+    .defaultPic {
+        height: 55vw;
+        width: 55vw;
+    }
+
+    .defaultPic img {
+        transform: scale(2.5) translateY(25px) translateX(7px);
+    }
+
+    .defaultPic img:hover {
+        transform: scale(2) translateY(25px) translateX(7px);
+    }
+
+    .defaultIntrodution {
+        font-size: 20px;
+    }
+
+    .introdutionText {
+        font-size: 15px;
+        margin: 0px;
+        /* margin-left: 10px; */
+        padding: 10px;
+        width: 80%;
+    }
+
+    .swiper-image {
+        border: none;
+        /* border-top: 1px solid #222;
+        border-bottom: 1px solid #222; */
+        border-radius: 30px;
+    }
 }
