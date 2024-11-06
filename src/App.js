@@ -8,7 +8,7 @@ import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import TaskOutlinedIcon from '@mui/icons-material/TaskOutlined';
 import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
 import { useEffect, useRef, useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Tooltip, tooltipClasses } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Switch, Tooltip, tooltipClasses } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import HelpIcon from '@mui/icons-material/Help';
@@ -41,6 +41,7 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 
 import { EffectCoverflow, Pagination, Autoplay } from 'swiper/modules';
+import { styled } from 'styled-components';
 
 export const isMobile = () => {
   const isMobileDevice = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(
@@ -49,12 +50,78 @@ export const isMobile = () => {
   return isMobileDevice
 }
 
+const languageTexts = {
+  pt: {
+    contact: [
+      '<strong>Desenvolvedor</strong> Front-End.',
+      '<strong>Desenvolvedor</strong> Freelance.',
+      '<strong>Designer</strong> de Interfaces.',
+      'Entre em <strong>Contato</strong>.',
+    ],
+    contactDesc: 'Meu nome é Bruno Leonardi, eu sou desenvolvedor há 3 anos, desenvolvo diversos tipos de páginas, buscando estilos modernos e inovadores.',
+    contactButton: 'Entre em contato',
+    introduction: 'Oi! Sou Bruno, desenvolvedor e designer.',
+    aboutMe: 'Sobre Mim',
+    projects: 'Meus Projetos',
+    titles: {
+      developer: 'Desenvolvedor Front-End',
+      designer: 'Designer de Interfaces',
+      services: 'Serviços Oferecidos',
+      certifications: 'Certificações e Cursos',
+      projects: 'Meus Projetos',
+      desc: 'Clique e Saiba Mais'
+    },
+    developerDescription: `Sou formado em TI. Comecei minha carreira como desenvolvedor front-end, criando interfaces interativas e trabalhando com mapas dinâmicos para melhorar a visualização de dados geoespaciais. Utilizando tecnologias como HTML, CSS, JavaScript e React, desenvolvo soluções que priorizam a performance e eficiência.`,
+    designerDescription: `Buscando aprimorar minhas habilidades, fiz uma pós-graduação em User Experience (UX), onde aprendi sobre princípios de design, heurísticas de usabilidade e como criar interfaces mais intuitivas. Essa formação me permitiu aplicar conceitos sólidos de design, melhorando a experiência do usuário em cada projeto que desenvolvo.`,
+    servicesDescription: `Hoje, atuo em uma empresa e também trabalho como freelancer, oferecendo serviços que buscam sempre criar soluções que equilibrem personalidade, usabilidade e eficiência. Estou disponível para o desenvolvimento de interfaces interativas, design de experiência do usuário e soluções personalizadas para atender às necessidades de cada cliente.`,
+    certificationsDescription: `Sou formado em Análise e Desenvolvimento de Sistemas pela Universidade São Judas Tadeu, onde me graduei em 2021. Finalizei minha pós-graduação em User Experience (UX) em 2024, onde aprofundei meus conhecimentos em design de interfaces e usabilidade. Além disso, concluí diversos cursos adicionais nas áreas de React, JavaScript, CSS e design, aprimorando ainda mais minhas habilidades técnicas.`,
+    tooltips: {
+      home: 'Início',
+      projects: 'Em meus projetos, você notará que em algumas imagens, ao clicar, uma mensagem informa que o site é privado. Isso ocorre porque é um serviço restrito, acessível apenas com login e senha para usuários específicos. Por isso, adicionei imagens que permitem uma visualização detalhada: basta passar o mouse sobre elas para conferir melhor os detalhes da interface.',
+    },
+  },
+  en: {
+    contact: [
+      '<strong>Front-End</strong> Developer.',
+      '<strong>Freelance</strong> Developer.',
+      '<strong>Interface</strong> Designer.',
+      'Get in <strong>Touch</strong>.',
+    ],
+    contactDesc: "My name is Bruno Leonardi, I have been a developer for 3 years, creating various types of pages, aiming for modern and innovative styles.",
+    contactButton: 'Get in touch',
+    introduction: 'Hi! I am Bruno, a developer and designer.',
+    aboutMe: 'About Me',
+    projects: 'My Projects',
+    titles: {
+      developer: 'Front-End Developer',
+      designer: 'Interface Designer',
+      services: 'Offered Services',
+      certifications: 'Certifications and Courses',
+      projects: 'My Projects',
+      desc: 'Click to Learn More'
+    },
+    developerDescription: `I have a degree in IT. I started my career as a front-end developer, creating interactive interfaces and working with dynamic maps to improve the visualization of geospatial data. Using technologies like HTML, CSS, JavaScript, and React, I develop solutions that prioritize performance and efficiency.`,
+    designerDescription: `Seeking to improve my skills, I pursued a postgraduate degree in User Experience (UX), where I learned about design principles, usability heuristics, and how to create more intuitive interfaces. This training allowed me to apply solid design concepts, enhancing user experience in every project I develop.`,
+    servicesDescription: `Today, I work at a company and also as a freelancer, offering services that always aim to create solutions that balance personality, usability, and efficiency. I am available for the development of interactive interfaces, user experience design, and custom solutions tailored to meet each client's needs.`,
+    certificationsDescription: `I graduated in Systems Analysis and Development from São Judas Tadeu University in 2021. I completed my postgraduate degree in User Experience (UX) in 2024, where I deepened my knowledge in interface design and usability. Additionally, I completed several additional courses in React, JavaScript, CSS, and design, further enhancing my technical skills.`,
+    tooltips: {
+      home: 'Home',
+      projects: 'In my projects, you will notice that for some images, when clicked, a message will indicate that the site is private. This is because it is a restricted service, accessible only with login and password for specific users. Therefore, I have added images that allow detailed visualization: just hover over them to better view the interface details.',
+    },
+  },
+};
+
+
+
+
+
 function App() {
   const scrollContainerRef = useRef([]);
   const sectionRefs = useRef([]);
   const swiper1Ref = useRef(null);
   const swiper2Ref = useRef(null);
   const swiper3Ref = useRef(null);
+  const [language, setLanguage] = useState('pt');
   const [currentSection, setCurrentSection] = useState(null);
   const [viewMode, setViewMode] = useState(isMobile() ? 'Desenvolvedor Front-End' : undefined);
   const [open, setOpen] = useState(false);
@@ -65,8 +132,6 @@ function App() {
 
 
   useEffect(() => {
-    let lastScrollTop = 0; // To track the last scroll position
-
     const handleScroll = () => {
       const scrollContainer = scrollContainerRef.current;
       if (scrollContainer) {
@@ -84,7 +149,6 @@ function App() {
       });
     };
 
-    // Set up the Intersection Observer
     const observer = new IntersectionObserver(handleIntersection, {
       threshold: 0.5,
     });
@@ -93,14 +157,12 @@ function App() {
       if (section) observer.observe(section);
     });
 
-    // Attach the scroll event listener to the scrollable container
     const scrollContainer = scrollContainerRef.current;
     if (scrollContainer) {
       scrollContainer.addEventListener('scroll', handleScroll);
       console.log('Scroll event listener attached');
     }
 
-    // Clean up both observers on component unmount
     return () => {
       observer.disconnect();
       if (scrollContainer) {
@@ -181,6 +243,41 @@ function App() {
     link.click();
   };
 
+  const GreySwitch = styled(Switch)(({ theme }) => ({
+    '& .MuiSwitch-switchBase': {
+      color: '#fff', // Thumb color when unchecked
+      '&.Mui-checked': {
+        color: '#fff', // Thumb color when checked
+      },
+      '&.Mui-checked + .MuiSwitch-track': {
+        backgroundColor: '#aaa', // Track color when checked
+        opacity: 1,
+      },
+    },
+    '& .MuiSwitch-track': {
+      backgroundColor: '#aaa', // Track color when unchecked
+      opacity: 1,
+    },
+  }));
+
+  const [checked, setChecked] = useState(true)
+
+  const changeLanguage = (event) => {
+    setChecked(event.target.checked);
+    const newLanguage = event.target.checked ? 'pt' : 'en';
+  
+    // Find the matching key in the current language
+    const currentLanguage = language;
+    const matchingKey = Object.entries(languageTexts[currentLanguage].titles).find(
+      ([key, value]) => value === viewMode
+    )?.[0];
+  
+    // Set the new language and update viewMode if a matching key was found
+    setLanguage(newLanguage);
+    if (matchingKey) {
+      setViewMode(languageTexts[newLanguage].titles[matchingKey]);
+    }
+  };
 
   return (
     <div className='home-page'>
@@ -196,20 +293,15 @@ function App() {
           <div className='contactInfos'>
             <div className='contactTitle'>
               <ReactTyped
-                strings={[
-                  '<strong>Desenvolvedor</strong> Front-End.',
-                  '<strong>Desenvolvedor</strong> Freelance.',
-                  '<strong>Designer</strong> de Interfaces.',
-                  'Entre em <strong>Contato</strong>.'
-                ]}
+                strings={languageTexts[language].contact}
                 typeSpeed={40}
                 backSpeed={50}
                 loop
               />
             </div>
             <div className='contactDesc'>
-              Meu nome é Bruno Leonardi, eu sou desenvolvedor há 3 anos, desenvolvo diversos tipos de páginas, buscando estilos modernos e inovadores
-              <button onClick={() => redirectHandle('email')} className='contactButton'>Entre em contato</button>
+              {languageTexts[language].contactDesc}
+              <button onClick={() => redirectHandle('email')} className='contactButton'>{languageTexts[language].contactButton}</button>
               <div className='buttonsContact'>
                 <img onClick={() => redirectHandle('linkedln')} src='https://cdn-icons-png.flaticon.com/256/61/61109.png'></img>
                 <img onClick={() => redirectHandle('whatsapp')} src='https://static-00.iconduck.com/assets.00/whatsapp-icon-495x512-y1nyb5ge.png'></img>
@@ -222,8 +314,14 @@ function App() {
       )}
       {isMobile() ? (
         <div className='navigation-hub'>
+          <div style={{ display: 'flex', alignItems: "center", padding: '0px 10px' }}>
+            <img style={{ height: '10px', marginRight: '5px' }} src='https://cdn.britannica.com/33/4833-050-F6E415FE/Flag-United-States-of-America.jpg' alt='brazilFlag'></img>
+            <GreySwitch size='small' checked={checked} onChange={changeLanguage} />
+            <img style={{ height: '10px', marginLeft: '5px' }} src='https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/1200px-Flag_of_Brazil.svg.png' alt='brazilFlag'></img>
+            <div style={{ height: '30px', width: '1px', background: '#777', marginLeft: '15px', marginRight: '-3px' }} />
+          </div>
           <Tooltip
-            title={'Início'}
+            title={languageTexts[language].tooltips.home}
             PopperProps={{
               sx: {
                 [`& .MuiTooltip-tooltip`]: {
@@ -246,7 +344,7 @@ function App() {
             </IconButton>
           </Tooltip>
           <Tooltip
-            title={'Início'}
+            title={languageTexts[language].aboutMe}
             PopperProps={{
               sx: {
                 [`& .MuiTooltip-tooltip`]: {
@@ -269,7 +367,7 @@ function App() {
             </IconButton>
           </Tooltip>
           <Tooltip
-            title={'Projetos'}
+            title={languageTexts[language].projects}
             PopperProps={{
               sx: {
                 [`& .MuiTooltip-tooltip`]: {
@@ -301,8 +399,14 @@ function App() {
         </div>
       ) : (
         <div className='navigation-hub'>
+          <div style={{ display: 'flex', alignItems: "center", padding: '0px 10px' }}>
+            <img style={{ height: '13px' }} src='https://cdn.britannica.com/33/4833-050-F6E415FE/Flag-United-States-of-America.jpg' alt='brazilFlag'></img>
+            <GreySwitch checked={checked} onChange={changeLanguage} />
+            <img style={{ height: '13px' }} src='https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/1200px-Flag_of_Brazil.svg.png' alt='brazilFlag'></img>
+            <div style={{ height: '30px', width: '1px', background: '#777', marginLeft: '15px', marginRight: '-3px' }} />
+          </div>
           <Tooltip
-            title={'Início'}
+            title={languageTexts[language].tooltips.home}
             PopperProps={{
               sx: {
                 [`& .MuiTooltip-tooltip`]: {
@@ -325,7 +429,7 @@ function App() {
             </IconButton>
           </Tooltip>
           <Tooltip
-            title={'Projetos'}
+            title={languageTexts[language].projects}
             PopperProps={{
               sx: {
                 [`& .MuiTooltip-tooltip`]: {
@@ -359,25 +463,20 @@ function App() {
       <div className='info-area'>
         <div className="scroll-container" ref={scrollContainerRef}>
           {isMobile() && (
-            <div data-index="1" ref={(el) => (sectionRefs.current[0] = el)} className="section" style={{ flexDirection: "column" }}>
+            <div data-index="1" ref={(el) => (sectionRefs.current[0] = el)} className="section" style={{ flexDirection: "column", justifyContent: 'initial' }}>
               <div className='contact'>
                 <div className='contactInfos'>
                   <div className='contactTitle'>
                     <ReactTyped
-                      strings={[
-                        '<strong>Desenvolvedor</strong> Front-End.',
-                        '<strong>Desenvolvedor</strong> Freelance.',
-                        '<strong>Designer</strong> de Interfaces.',
-                        'Entre em <strong>Contato</strong>.'
-                      ]}
+                      strings={languageTexts[language].contact}
                       typeSpeed={40}
                       backSpeed={50}
                       loop
                     />
                   </div>
                   <div className='contactDesc'>
-                    Meu nome é Bruno Leonardi, eu sou desenvolvedor há 3 anos, desenvolvo diversos tipos de páginas, buscando estilos modernos e inovadores
-                    <button onClick={() => redirectHandle('email')} className='contactButton'>Entre em contato</button>
+                    {languageTexts[language].contactDesc}
+                    <button onClick={() => redirectHandle('email')} className='contactButton'>{languageTexts[language].contactButton}</button>
                     <div className='buttonsContact'>
                       <img onClick={() => redirectHandle('linkedln')} src='https://cdn-icons-png.flaticon.com/256/61/61109.png'></img>
                       <img onClick={() => redirectHandle('whatsapp')} src='https://static-00.iconduck.com/assets.00/whatsapp-icon-495x512-y1nyb5ge.png'></img>
@@ -391,69 +490,75 @@ function App() {
                 <div className='defaultPic'>
                   <img src={minhaFoto} alt='myPic'></img>
                 </div>
-                <div className='defaultIntrodution' >Oi! Sou Bruno, desenvolvedor e designer.</div>
+                <div className='defaultIntrodution'>{languageTexts[language].introduction}</div>
               </div>
             </div>
           )}
           <div data-index={!isMobile() ? "1" : "2"} ref={(el) => !isMobile() ? (sectionRefs.current[0] = el) : (sectionRefs.current[1] = el)} className="section cards-section">
-            {isMobile() ? (
-              <div style={{ display: "flex", flexDirection: 'column', justifyContent: 'center', alignItems: "center" }}>
-                <div style={{ width: '110px', textAlign: "center", backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', transform: 'translateY(-20px)', fontSize: isMobile() ? '20px' : '30px', color: '#fff' }}>
-                  Sobre Mim
-                </div>
-                <div className='infoCardsSetup'>
-                  <InfoCard setViewMode={setViewMode} viewMode={viewMode} title={'Desenvolvedor Front-End'} icon={<CodeIcon />} />
-                  <InfoCard setViewMode={setViewMode} viewMode={viewMode} title={'Designer de Interfaces'} icon={<BrushOutlinedIcon />} />
-                  <InfoCard setViewMode={setViewMode} viewMode={viewMode} title={'Serviços Oferecidos'} icon={<WorkOutlineOutlinedIcon />} />
-                  <InfoCard setViewMode={setViewMode} viewMode={viewMode} title={'Certificações e Cursos'} icon={<TaskOutlinedIcon />} />
-                  <InfoCard scrollToSection={scrollToSection} setViewMode={setViewMode} title={'Meus Projetos'} icon={<AccountTreeOutlinedIcon />} />
-                </div>
-              </div>
-            ) : (
-              <div className='infoCardsSetup'>
-                <InfoCard setViewMode={setViewMode} viewMode={viewMode} title={'Desenvolvedor Front-End'} icon={<CodeIcon />} />
-                <InfoCard setViewMode={setViewMode} viewMode={viewMode} title={'Designer de Interfaces'} icon={<BrushOutlinedIcon />} />
-                <InfoCard setViewMode={setViewMode} viewMode={viewMode} title={'Serviços Oferecidos'} icon={<WorkOutlineOutlinedIcon />} />
-                <InfoCard setViewMode={setViewMode} viewMode={viewMode} title={'Certificações e Cursos'} icon={<TaskOutlinedIcon />} />
-                <InfoCard scrollToSection={scrollToSection} setViewMode={setViewMode} title={'Meus Projetos'} icon={<AccountTreeOutlinedIcon />} />
-              </div>
-            )}
-            {viewMode ? (
-              viewMode === 'Desenvolvedor Front-End' ? (
-                <div className='introdutionText'>
-                  Sou formado em <strong>TI</strong>. Comecei minha carreira como <strong>desenvolvedor front-end</strong>, criando <strong>interfaces interativas</strong> e trabalhando com <strong>mapas dinâmicos</strong> para melhorar a visualização de <strong>dados geoespaciais</strong>. Utilizando tecnologias como <strong>HTML</strong>, <strong>CSS</strong>, <strong>JavaScript</strong> e <strong>React</strong>, desenvolvo soluções que priorizam a performance e eficiência.
-                </div>
-              ) : viewMode === 'Designer de Interfaces' ? (
-                <div className='introdutionText'>
-                  Buscando aprimorar minhas habilidades, fiz uma pós-graduação em <strong>User Experience (UX)</strong>, onde aprendi sobre <strong>princípios de design</strong>, <strong>heurísticas de usabilidade</strong> e como criar <strong>interfaces mais intuitivas</strong>. Essa formação me permitiu aplicar conceitos sólidos de design, melhorando a experiência do usuário em cada projeto que desenvolvo.
-                </div>
-              ) : viewMode === 'Serviços Oferecidos' ? (
-                <div className='introdutionText'>
-                  Hoje, atuo em uma empresa e também trabalho como <strong>freelancer</strong>, oferecendo serviços que buscam sempre criar soluções que equilibrem <strong>personalidade</strong>, <strong>usabilidade</strong> e <strong>eficiência</strong>. Estou disponível para o desenvolvimento de interfaces interativas, design de experiência do usuário e soluções personalizadas para atender às necessidades de cada cliente.
+            <div className='infosHub'>
+              {isMobile() ? (
+                <div style={{ display: "flex", flexDirection: 'column', justifyContent: 'center', alignItems: "center" }}>
+                  <div style={{ width: '110px', textAlign: "center", backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', margin: '20px 0px', fontSize: isMobile() ? '20px' : '30px', color: '#fff' }}>
+                    {languageTexts[language].aboutMe}
+                  </div>
+                  <div className='infoCardsSetup'>
+                    <InfoCard setViewMode={setViewMode} viewMode={viewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.developer} icon={<CodeIcon />} />
+                    <InfoCard setViewMode={setViewMode} viewMode={viewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.designer} icon={<BrushOutlinedIcon />} />
+                    <InfoCard setViewMode={setViewMode} viewMode={viewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.services} icon={<WorkOutlineOutlinedIcon />} />
+                    <InfoCard setViewMode={setViewMode} viewMode={viewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.certifications} icon={<TaskOutlinedIcon />} />
+                    <InfoCard scrollToSection={scrollToSection} setViewMode={setViewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.projects} icon={<AccountTreeOutlinedIcon />} />
+                  </div>
                 </div>
               ) : (
-                <div className='introdutionText'>
-                  Sou formado em <strong>Análise e Desenvolvimento de Sistemas</strong> pela <strong>Universidade São Judas Tadeu</strong>, onde me graduei em 2021. Finalizei minha pós-graduação em <strong>User Experience (UX)</strong> em 2024, onde aprofundei meus conhecimentos em <strong>design de interfaces</strong> e <strong>usabilidade</strong>. Além disso, concluí diversos cursos adicionais nas áreas de <strong>React</strong>, <strong>JavaScript</strong>, <strong>CSS</strong> e <strong>design</strong>, aprimorando ainda mais minhas habilidades técnicas.
+                <div className='infoCardsSetup'>
+                  <InfoCard setViewMode={setViewMode} viewMode={viewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.developer} icon={<CodeIcon />} />
+                  <InfoCard setViewMode={setViewMode} viewMode={viewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.designer} icon={<BrushOutlinedIcon />} />
+                  <InfoCard setViewMode={setViewMode} viewMode={viewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.services} icon={<WorkOutlineOutlinedIcon />} />
+                  <InfoCard setViewMode={setViewMode} viewMode={viewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.certifications} icon={<TaskOutlinedIcon />} />
+                  <InfoCard scrollToSection={scrollToSection} setViewMode={setViewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.projects} icon={<AccountTreeOutlinedIcon />} />
                 </div>
-              )
-            ) : isMobile() ? (
-              <div></div>
-            ) : (
-              <div className='defaultHub'>
-                <div className='defaultPic'>
-                  <img src={minhaFoto} alt='myPic'></img>
+              )}
+              {viewMode ? (
+                viewMode === 'Desenvolvedor Front-End' ? (
+                  <div className='introdutionText'>
+                    <div>{viewMode}</div>
+                    {languageTexts[language].developerDescription}
+                  </div>
+                ) : viewMode === 'Designer de Interfaces' ? (
+                  <div className='introdutionText'>
+                    <div>{viewMode}</div>
+                    {languageTexts[language].designerDescription}
+                  </div>
+                ) : viewMode === 'Serviços Oferecidos' ? (
+                  <div className='introdutionText'>
+                    <div>{viewMode}</div>
+                    {languageTexts[language].servicesDescription}
+                  </div>
+                ) : (
+                  <div className='introdutionText'>
+                    <div>{viewMode}</div>
+                    {languageTexts[language].certificationsDescription}
+                  </div>
+                )
+              ) : isMobile() ? (
+                <div></div>
+              ) : (
+                <div className='defaultHub'>
+                  <div className='defaultPic'>
+                    <img src={minhaFoto} alt='myPic'></img>
+                  </div>
+                  <div className='defaultIntrodution' >{languageTexts[language].introduction}</div>
                 </div>
-                <div className='defaultIntrodution' >Oi! Sou Bruno, desenvolvedor e designer.</div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
           <div data-index={!isMobile() ? "2" : "3"} ref={(el) => !isMobile() ? (sectionRefs.current[1] = el) : (sectionRefs.current[2] = el)} className="section">
             <div className='projects'>
-              <div style={{ backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', marginBottom: '30px', fontSize: isMobile() ? '20px' : '30px' }}>
-                Meus Projetos
+              <div style={{ backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', marginBottom: '20px', fontSize: isMobile() ? '20px' : '30px' }}>
+                {languageTexts[language].projects}
                 {!isMobile() && (
                   <Tooltip
-                    title={'Em meus projetos, você notará que em algumas imagens, ao clicar, uma mensagem informa que o site é privado. Isso ocorre porque é um serviço restrito, acessível apenas com login e senha para usuários específicos. Por isso, adicionei imagens que permitem uma visualização detalhada: basta passar o mouse sobre elas para conferir melhor os detalhes da interface.'}
+                    title={languageTexts[language].tooltips.projects}
                     PopperProps={{
                       sx: {
                         [`& .MuiTooltip-tooltip`]: {
@@ -559,6 +664,7 @@ function App() {
               <Swiper
                 grabCursor={true}
                 centeredSlides={true}
+                style={{ paddingRight: '15px' }}
                 slidesPerView={isMobile() ? 2 : 4}
                 loop={true}
                 coverflowEffect={{
@@ -734,7 +840,7 @@ function App() {
           </Button>
         </DialogActions>
       </Dialog>
-    </div >
+    </div>
   );
 }
 

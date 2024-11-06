@@ -3,7 +3,7 @@ import React from "react";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { isMobile } from "../App";
 
-const InfoCard = ({ scrollToSection, setViewMode, viewMode, title, icon, iconColor }) => {
+const InfoCard = ({ scrollToSection, setViewMode, viewMode, title, icon, iconColor, desc }) => {
     const handleClick = () => {
         if (scrollToSection) {
             scrollToSection(isMobile() ? 2 : 1)
@@ -22,7 +22,7 @@ const InfoCard = ({ scrollToSection, setViewMode, viewMode, title, icon, iconCol
                     {title}
                 </div>
                 <div className='card-content'>
-                    Clique e saiba mais
+                    {desc}
                 </div>
             </div>
             <IconButton sx={{ marginRight: '-20px', marginLeft: isMobile() ? '-10px' : '-20px' }}><ChevronRightIcon /></IconButton>

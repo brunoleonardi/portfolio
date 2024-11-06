@@ -154,12 +154,16 @@
     right: 55px;
     top: 10px;
     height: 40px;
-    border-radius: 30px;
-    padding: 0px 6px;
+    border-radius: 13px;
+    padding: 0px 3px;
     /* width: 250px; */
     gap: 10px;
     z-index: 11;
-    overflow: hidden;
+    /* overflow: hidden; */
+}
+
+.navigation-hub svg {
+    font-size: 18px;
 }
 
 .navigation-hub>*>* {
@@ -170,7 +174,7 @@
     /* padding: 3px 10px !important; */
     border-radius: 10px !important;
     background: #5c5c4a !important;
-    transform: scale(1.3);
+    transform: scale(1.1);
 }
 
 .info-area {
@@ -227,7 +231,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
 }
 
 .defaultHub {
@@ -297,7 +301,6 @@
 
 }
 
-
 .introdutionText {
     backdrop-filter: blur(20px);
     background: #2222224c;
@@ -310,6 +313,15 @@
     color: #fff;
     font-size: 20px;
     margin: 0px 50px;
+}
+
+.introdutionText div {
+    /* border-left: 3px solid #FDFFC2; */
+    margin: 20px 0px;
+    margin-top: 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .cards-section {
@@ -352,12 +364,16 @@
 }
 
 .info-card.activated {
-    transform: scale(1.05);
+    transform: scale(1.07);
+    /* height: 70px; */
     background: #fff;
 }
 
-.info-card.activated .info-setup .card-title {
+.info-card.activated .info-setup .card-title,
+.info-card.activated .icon-border,
+.info-card.activated svg {
     font-weight: bold;
+    color: #000;
 }
 
 .info-card:active {
@@ -373,6 +389,15 @@
     align-items: center;
     color: #656565;
     background: #d9d9d6;
+}
+
+.infosHub{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
 .info-setup {
@@ -424,7 +449,7 @@
 }
 
 .swiper-wrapper {
-    gap: 10px;
+    gap: 5px;
 }
 
 .swiper-image {
@@ -433,7 +458,7 @@
     object-fit: cover;
     overflow: hidden;
     /* border: 2px solid #222; */
-    border-radius: 30px;
+    border-radius: 10px;
 }
 
 .swiper-pagination-bullet-active {
@@ -444,7 +469,7 @@
 
 @media (max-width: 768px) {
     .home-page {
-        background: #0a1e1e;
+        background: #222222;
         flex-direction: column;
         width: 100vw;
     }
@@ -454,7 +479,7 @@
         right: 50%;
         top: auto;
         bottom: 10px;
-        height: 45px;
+        height: 40px;
         gap: 10px;
         border-radius: 14px;
         transform: translateX(50%);
@@ -494,7 +519,7 @@
     }
 
     .contactDesc {
-        font-size: 16px;
+        font-size: 14px;
         justify-content: center;
         align-items: center;
         gap: 30px;
@@ -525,7 +550,9 @@
 
     .cards-section {
         padding: 0px;
+        justify-content: unset;
         flex-direction: column;
+        /* transform: translateY(-10%); */
         gap: 40px;
     }
 
@@ -540,10 +567,15 @@
 
 
     .info-card {
-        height: 60px;
+        height: 50px;
         width: 45%;
         padding: 10px 0px;
         gap: 0px;
+    }
+    
+    .info-card.activated {
+        z-index: 5;
+        box-shadow: 0px 0px 50px #000000ec;
     }
 
     .icon-border {
@@ -557,10 +589,15 @@
         font-size: 20px;
     }
 
-    .info-setup {
-        gap: 10px;
+    .infosHub{
+        flex-direction: column;
+        gap: 20px;
+        transform: translateY(-7%);
     }
 
+    .info-setup {
+        gap: 5px;
+    }
 
     .card-title {
         font-size: 12px;
@@ -575,8 +612,10 @@
         margin: 0px;
         padding: 0px;
         width: 50%;
-        gap: 30px;
-        margin-bottom: 70px;
+        gap: 20px;
+        /* margin-bottom: 70px; */
+        justify-content: right;
+        /* flex-direction: column-reverse; */
     }
 
     .defaultPic {
@@ -593,11 +632,11 @@
     }
 
     .defaultIntrodution {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .introdutionText {
-        font-size: 15px;
+        font-size: 14px;
         margin: 0px;
         /* margin-left: 10px; */
         padding: 10px;
@@ -605,11 +644,12 @@
         /* border-bottom: 3px solid #094c5a; */
     }
 
+    .introdutionText div {
+        font-size: 16px;
+    }
+
     .swiper-image {
         border: none;
-        /* border-top: 1px solid #222;
-        border-bottom: 1px solid #222; */
-        border-radius: 30px;
     }
 
     .scroll-container {
@@ -620,5 +660,12 @@
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center top;
+    }
+
+    .projects {
+        width: 100%;
+        height: 100vh;
+        padding-top: 50px;
+        transform: translateY(-7%);
     }
 }
