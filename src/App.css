@@ -182,12 +182,6 @@
     z-index: 10;
 }
 
-.scroll-container {
-    height: 100vh;
-    overflow: hidden;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
-}
 
 .scroll-container::-webkit-scrollbar {
     width: 10px;
@@ -206,8 +200,8 @@
     background-color: #fff;
 }
 
-
 .scroll-container {
+    scroll-behavior: smooth;
     overflow: hidden;
     height: 100vh;
     width: 100%;
@@ -450,6 +444,7 @@
 
 @media (max-width: 768px) {
     .home-page {
+        background: #0a1e1e;
         flex-direction: column;
         width: 100vw;
     }
@@ -467,6 +462,10 @@
 
     .navigation-hub svg {
         font-size: 18px;
+    }
+
+    .iconActivated {
+        background: #094c5a !important;
     }
 
     .contact {
@@ -603,6 +602,7 @@
         /* margin-left: 10px; */
         padding: 10px;
         width: 80%;
+        border-bottom: 3px solid #094c5a;
     }
 
     .swiper-image {
@@ -611,15 +611,13 @@
         border-bottom: 1px solid #222; */
         border-radius: 30px;
     }
-}
 
-iframe,
-.vercel-feedback,
-.vercel-widget,
-.vercel-support {
-    display: none !important;
-}
-
-#feedback-toolbar {
-    display: none !important;
+    .scroll-container {
+        height: 100vh;
+        /* Full viewport height */
+        background-image: url('https://static1.squarespace.com/static/5e949a92e17d55230cd1d44f/t/61e1dcd813285818a447a846/1642192089261/Green_MW_iPad.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center top;
+    }
 }

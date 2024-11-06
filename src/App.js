@@ -50,6 +50,7 @@ export const isMobile = () => {
 }
 
 function App() {
+  const scrollContainerRef = useRef([]);
   const sectionRefs = useRef([]);
   const swiper1Ref = useRef(null);
   const swiper2Ref = useRef(null);
@@ -62,7 +63,18 @@ function App() {
     setOpen(false);
   };
 
+
   useEffect(() => {
+    let lastScrollTop = 0; // To track the last scroll position
+
+    const handleScroll = () => {
+      const scrollContainer = scrollContainerRef.current;
+      if (scrollContainer) {
+        const scrollPosition = scrollContainer.scrollTop;
+        scrollContainer.style.backgroundPositionY = `-${scrollPosition * 0.3}px`;
+      }
+    };
+
     const handleIntersection = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -72,6 +84,7 @@ function App() {
       });
     };
 
+    // Set up the Intersection Observer
     const observer = new IntersectionObserver(handleIntersection, {
       threshold: 0.5,
     });
@@ -80,8 +93,19 @@ function App() {
       if (section) observer.observe(section);
     });
 
+    // Attach the scroll event listener to the scrollable container
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll);
+      console.log('Scroll event listener attached');
+    }
+
+    // Clean up both observers on component unmount
     return () => {
       observer.disconnect();
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleScroll);
+      }
     };
   }, []);
 
@@ -333,7 +357,7 @@ function App() {
         </div>
       )}
       <div className='info-area'>
-        <div className="scroll-container">
+        <div className="scroll-container" ref={scrollContainerRef}>
           {isMobile() && (
             <div data-index="1" ref={(el) => (sectionRefs.current[0] = el)} className="section" style={{ flexDirection: "column" }}>
               <div className='contact'>
