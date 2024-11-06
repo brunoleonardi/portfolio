@@ -464,9 +464,9 @@
         font-size: 18px;
     }
 
-    .iconActivated {
+    /* .iconActivated {
         background: #094c5a !important;
-    }
+    } */
 
     .contact {
         /* border-radius: 30% 40% 60% 40%; */
@@ -602,7 +602,7 @@
         /* margin-left: 10px; */
         padding: 10px;
         width: 80%;
-        border-bottom: 3px solid #094c5a;
+        /* border-bottom: 3px solid #094c5a; */
     }
 
     .swiper-image {
@@ -615,7 +615,8 @@
     .scroll-container {
         height: 100vh;
         /* Full viewport height */
-        background-image: url('https://static1.squarespace.com/static/5e949a92e17d55230cd1d44f/t/61e1dcd813285818a447a846/1642192089261/Green_MW_iPad.png');
+        /* background-image: url('https://static1.squarespace.com/static/5e949a92e17d55230cd1d44f/t/61e1dcd813285818a447a846/1642192089261/Green_MW_iPad.png'); */
+        background-image: url('./assets/background.png');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center top;
