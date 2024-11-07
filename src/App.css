@@ -273,6 +273,7 @@
     /* font-family: "DynaPuff", system-ui;
     font-optical-sizing: auto;
     font-style: normal; */
+    font-size: 35px;
     text-align: center;
     width: 100%;
     color: #fff;
@@ -348,7 +349,8 @@
 }
 
 .info-card {
-    width: 100%;
+    /* width: 100%; */
+    width: 25vw;
     height: 90px;
     cursor: pointer;
     background: #f4eded;
@@ -360,13 +362,42 @@
     justify-content: center;
     align-items: center;
     box-shadow: 5px 5px 10px #0000002b;
-    transition: .4s;
+    /* transition: .4s cubic-bezier(0.19, 1, 0.22, 1); */
+    transition: .4s ease;
+}
+
+.info-card.hideImg {
+    width: 35vw;
+}
+
+.info-card.activated svg {
+    display: none;
+}
+
+.info-card.activated div svg {
+    display: flex;
+}
+
+.info-card.activated .info-setup {
+    width: 70%;
 }
 
 .info-card.activated {
+    width: 40vw;
+    padding: 30px 0px;
+    height: auto;
     transform: scale(1.07);
     /* height: 70px; */
+    z-index: 5;
     background: #fff;
+}
+
+.info-card.activated .card-content {
+    font-size: 17px;
+}
+
+.info-card.activated .card-title {
+    font-size: 18px;
 }
 
 .info-card.activated .info-setup .card-title,
@@ -374,6 +405,10 @@
 .info-card.activated svg {
     font-weight: bold;
     color: #000;
+}
+
+.info-card.activated .icon-border {
+    margin-right: 15px;
 }
 
 .info-card:active {
@@ -391,7 +426,7 @@
     background: #d9d9d6;
 }
 
-.infosHub{
+.infosHub {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -401,7 +436,7 @@
 }
 
 .info-setup {
-    width: 50%;
+    width: 70%;
     gap: 10px;
     display: flex;
     flex-direction: column;
@@ -565,17 +600,39 @@
         gap: 10px;
     }
 
-
     .info-card {
         height: 50px;
-        width: 45%;
+        width: 45vw;
         padding: 10px 0px;
         gap: 0px;
+        transition: .2s ease step-start;
     }
-    
+
+    .info-card.hideImg {
+        width: 45vw;
+    }
+
     .info-card.activated {
         z-index: 5;
-        box-shadow: 0px 0px 50px #000000ec;
+        box-shadow: none;
+        width: 92vw;
+        color: #fff;
+        height: auto;
+    }
+
+    .info-card.activated .card-content {
+        display: flex;
+        font-size: 14px;
+    }
+
+    .info-card.activated .icon-border {
+        margin-right: 15px;
+        margin-left: -25px;
+    }
+
+    .info-card.activated .card-title {
+        font-size: 16px;
+        margin-bottom: 10px;
     }
 
     .icon-border {
@@ -589,13 +646,14 @@
         font-size: 20px;
     }
 
-    .infosHub{
+    .infosHub {
         flex-direction: column;
         gap: 20px;
         transform: translateY(-7%);
     }
 
     .info-setup {
+        width: 50%;
         gap: 5px;
     }
 

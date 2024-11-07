@@ -42,6 +42,7 @@ import 'swiper/css/pagination';
 
 import { EffectCoverflow, Pagination, Autoplay } from 'swiper/modules';
 import { styled } from 'styled-components';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export const isMobile = () => {
   const isMobileDevice = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(
@@ -79,6 +80,8 @@ const languageTexts = {
       home: 'Início',
       projects: 'Em meus projetos, você notará que em algumas imagens, ao clicar, uma mensagem informa que o site é privado. Isso ocorre porque é um serviço restrito, acessível apenas com login e senha para usuários específicos. Por isso, adicionei imagens que permitem uma visualização detalhada: basta passar o mouse sobre elas para conferir melhor os detalhes da interface.',
     },
+    privateSite: `Site Privado`,
+    privateSiteDesc: `Este site é privado e não pode ser acessado.`,
   },
   en: {
     contact: [
@@ -108,6 +111,8 @@ const languageTexts = {
       home: 'Home',
       projects: 'In my projects, you will notice that for some images, when clicked, a message will indicate that the site is private. This is because it is a restricted service, accessible only with login and password for specific users. Therefore, I have added images that allow detailed visualization: just hover over them to better view the interface details.',
     },
+    privateSite: `Private Site`,
+    privateSiteDesc: `This site is private and cannot be accessed.`
   },
 };
 
@@ -123,8 +128,9 @@ function App() {
   const swiper3Ref = useRef(null);
   const [language, setLanguage] = useState('pt');
   const [currentSection, setCurrentSection] = useState(null);
-  const [viewMode, setViewMode] = useState(isMobile() ? 'Desenvolvedor Front-End' : undefined);
+  const [viewMode, setViewMode] = useState(isMobile() ? languageTexts[language].titles.developer : undefined);
   const [open, setOpen] = useState(false);
+  const [checked, setChecked] = useState(true)
 
   const handleClose = () => {
     setOpen(false);
@@ -132,6 +138,17 @@ function App() {
 
 
   useEffect(() => {
+    const userLanguage = navigator.language || navigator.userLanguage; // Detect browser language
+    const portugueseLocales = ['pt', 'pt-BR', 'pt-PT', 'pt-AO', 'pt-MZ'];
+
+    if (portugueseLocales.includes(userLanguage)) {
+      setLanguage('pt');
+      setChecked(true)
+    } else {
+      setChecked(false)
+      setLanguage('en');
+    }
+
     const handleScroll = () => {
       const scrollContainer = scrollContainerRef.current;
       if (scrollContainer) {
@@ -160,7 +177,6 @@ function App() {
     const scrollContainer = scrollContainerRef.current;
     if (scrollContainer) {
       scrollContainer.addEventListener('scroll', handleScroll);
-      console.log('Scroll event listener attached');
     }
 
     return () => {
@@ -260,18 +276,16 @@ function App() {
     },
   }));
 
-  const [checked, setChecked] = useState(true)
-
   const changeLanguage = (event) => {
     setChecked(event.target.checked);
     const newLanguage = event.target.checked ? 'pt' : 'en';
-  
+
     // Find the matching key in the current language
     const currentLanguage = language;
     const matchingKey = Object.entries(languageTexts[currentLanguage].titles).find(
       ([key, value]) => value === viewMode
     )?.[0];
-  
+
     // Set the new language and update viewMode if a matching key was found
     setLanguage(newLanguage);
     if (matchingKey) {
@@ -497,49 +511,67 @@ function App() {
           <div data-index={!isMobile() ? "1" : "2"} ref={(el) => !isMobile() ? (sectionRefs.current[0] = el) : (sectionRefs.current[1] = el)} className="section cards-section">
             <div className='infosHub'>
               {isMobile() ? (
-                <div style={{ display: "flex", flexDirection: 'column', justifyContent: 'center', alignItems: "center" }}>
-                  <div style={{ width: '110px', textAlign: "center", backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', margin: '20px 0px', fontSize: isMobile() ? '20px' : '30px', color: '#fff' }}>
+                <div style={{ display: "flex", flexDirection: 'column', justifyContent: 'center', alignItems: "center", transition: ".4s" }}>
+                  <div style={{ width: isMobile() ? '110px' : '200px', textAlign: "center", backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', margin: '20px 0px', fontSize: isMobile() ? '20px' : '35px', color: '#fff', transition: '.4s', position: "absolute", top: isMobile() ? '100px' : '40px' }}>
                     {languageTexts[language].aboutMe}
                   </div>
                   <div className='infoCardsSetup'>
-                    <InfoCard setViewMode={setViewMode} viewMode={viewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.developer} icon={<CodeIcon />} />
-                    <InfoCard setViewMode={setViewMode} viewMode={viewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.designer} icon={<BrushOutlinedIcon />} />
-                    <InfoCard setViewMode={setViewMode} viewMode={viewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.services} icon={<WorkOutlineOutlinedIcon />} />
-                    <InfoCard setViewMode={setViewMode} viewMode={viewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.certifications} icon={<TaskOutlinedIcon />} />
-                    <InfoCard scrollToSection={scrollToSection} setViewMode={setViewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.projects} icon={<AccountTreeOutlinedIcon />} />
+                    {/* <AnimatePresence> */}
+                    {[
+                      { title: languageTexts[language].titles.developer, modeDesc: languageTexts[language].developerDescription, icon: <CodeIcon /> },
+                      { title: languageTexts[language].titles.designer, modeDesc: languageTexts[language].designerDescription, icon: <BrushOutlinedIcon /> },
+                      { title: languageTexts[language].titles.services, modeDesc: languageTexts[language].servicesDescription, icon: <WorkOutlineOutlinedIcon /> },
+                      { title: languageTexts[language].titles.certifications, modeDesc: languageTexts[language].certificationsDescription, icon: <TaskOutlinedIcon /> },
+                      { title: languageTexts[language].titles.projects, icon: <AccountTreeOutlinedIcon />, scrollToSection }
+                    ]
+                      .sort((a, b) => (viewMode === a.title ? 1 : 0) - (viewMode === b.title ? 1 : 0)) // Sort active card to the end
+                      .map(({ title, icon, modeDesc, scrollToSection }, index) => (
+                        <motion.div key={title} layout>
+                          <InfoCard
+                            setViewMode={setViewMode}
+                            viewMode={viewMode}
+                            desc={languageTexts[language].titles.desc}
+                            modeDesc={modeDesc}
+                            title={title}
+                            icon={icon}
+                            scrollToSection={scrollToSection}
+                          />
+                        </motion.div>
+                      ))}
+                    {/* </AnimatePresence> */}
                   </div>
                 </div>
               ) : (
                 <div className='infoCardsSetup'>
-                  <InfoCard setViewMode={setViewMode} viewMode={viewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.developer} icon={<CodeIcon />} />
-                  <InfoCard setViewMode={setViewMode} viewMode={viewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.designer} icon={<BrushOutlinedIcon />} />
-                  <InfoCard setViewMode={setViewMode} viewMode={viewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.services} icon={<WorkOutlineOutlinedIcon />} />
-                  <InfoCard setViewMode={setViewMode} viewMode={viewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.certifications} icon={<TaskOutlinedIcon />} />
-                  <InfoCard scrollToSection={scrollToSection} setViewMode={setViewMode} desc={languageTexts[language].titles.desc} title={languageTexts[language].titles.projects} icon={<AccountTreeOutlinedIcon />} />
+                  {/* <AnimatePresence> */}
+                  <div style={{ width: '200px', textAlign: "center", backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', margin: '20px 0px', fontSize: '35px', color: '#fff', transition: '.4s', position: "absolute", top: '40px' }}>
+                    {languageTexts[language].aboutMe}
+                  </div>
+                  {[
+                    { title: languageTexts[language].titles.developer, modeDesc: languageTexts[language].developerDescription, icon: <CodeIcon /> },
+                    { title: languageTexts[language].titles.designer, modeDesc: languageTexts[language].designerDescription, icon: <BrushOutlinedIcon /> },
+                    { title: languageTexts[language].titles.services, modeDesc: languageTexts[language].servicesDescription, icon: <WorkOutlineOutlinedIcon /> },
+                    { title: languageTexts[language].titles.certifications, modeDesc: languageTexts[language].certificationsDescription, icon: <TaskOutlinedIcon /> },
+                    { title: languageTexts[language].titles.projects, icon: <AccountTreeOutlinedIcon />, scrollToSection }
+                  ]
+                    .map(({ title, icon, modeDesc, scrollToSection }, index) => (
+                      <motion.div key={title} layout>
+                        <InfoCard
+                          setViewMode={setViewMode}
+                          viewMode={viewMode}
+                          desc={languageTexts[language].titles.desc}
+                          modeDesc={modeDesc}
+                          title={title}
+                          icon={icon}
+                          scrollToSection={scrollToSection}
+                        />
+                      </motion.div>
+                    ))}
+                  {/* </AnimatePresence> */}
                 </div>
               )}
               {viewMode ? (
-                viewMode === 'Desenvolvedor Front-End' ? (
-                  <div className='introdutionText'>
-                    <div>{viewMode}</div>
-                    {languageTexts[language].developerDescription}
-                  </div>
-                ) : viewMode === 'Designer de Interfaces' ? (
-                  <div className='introdutionText'>
-                    <div>{viewMode}</div>
-                    {languageTexts[language].designerDescription}
-                  </div>
-                ) : viewMode === 'Serviços Oferecidos' ? (
-                  <div className='introdutionText'>
-                    <div>{viewMode}</div>
-                    {languageTexts[language].servicesDescription}
-                  </div>
-                ) : (
-                  <div className='introdutionText'>
-                    <div>{viewMode}</div>
-                    {languageTexts[language].certificationsDescription}
-                  </div>
-                )
+                <></>
               ) : isMobile() ? (
                 <div></div>
               ) : (
@@ -547,7 +579,7 @@ function App() {
                   <div className='defaultPic'>
                     <img src={minhaFoto} alt='myPic'></img>
                   </div>
-                  <div className='defaultIntrodution' >{languageTexts[language].introduction}</div>
+                  <div className='defaultIntrodution' style={{ fontSize: "35px" }} >{languageTexts[language].introduction}</div>
                 </div>
               )}
             </div>
@@ -832,8 +864,8 @@ function App() {
         </div>
       </div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Site Privado</DialogTitle>
-        <DialogContent>Este site é privado e não pode ser acessado.</DialogContent>
+        <DialogTitle>{languageTexts[language].privateSite}</DialogTitle>
+        <DialogContent>{languageTexts[language].privateSiteDesc}</DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Fechar
@@ -845,3 +877,25 @@ function App() {
 }
 
 export default App;
+
+{/* viewMode === languageTexts[language].titles.developer ? (
+                  <div className='introdutionText'>
+                    <div>{viewMode}</div>
+                    {languageTexts[language].developerDescription}
+                  </div>
+                ) : viewMode === languageTexts[language].titles.designer ? (
+                  <div className='introdutionText'>
+                    <div>{viewMode}</div>
+                    {languageTexts[language].designerDescription}
+                  </div>
+                ) : viewMode === languageTexts[language].titles.services ? (
+                  <div className='introdutionText'>
+                    <div>{viewMode}</div>
+                    {languageTexts[language].servicesDescription}
+                  </div>
+                ) : (
+                  <div className='introdutionText'>
+                    <div>{viewMode}</div>
+                    {languageTexts[language].certificationsDescription}
+                  </div>
+                ) */}

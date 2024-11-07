@@ -1,34 +1,46 @@
+import { motion } from 'framer-motion';
 import { IconButton } from "@mui/material";
 import React from "react";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { isMobile } from "../App";
 
-const InfoCard = ({ scrollToSection, setViewMode, viewMode, title, icon, iconColor, desc }) => {
+const InfoCard = ({ scrollToSection, setViewMode, viewMode, title, icon, iconColor, desc, modeDesc }) => {
     const handleClick = () => {
         if (scrollToSection) {
-            scrollToSection(isMobile() ? 2 : 1)
-            return
+            scrollToSection(isMobile() ? 2 : 1);
+            return;
         }
-        setViewMode(title)
-    }
+        setViewMode(title);
+    };
 
     return (
-        <div className={`info-card ${viewMode === title ? 'activated' : ''}`} onClick={handleClick}>
+        <motion.div
+            layout
+            initial={{ opacity: 0, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 0 }}
+            transition={{ duration: 0 }}
+            className={`info-card ${viewMode ? 'hideImg' : ''} ${viewMode === title ? 'activated' : ''}`}
+            onClick={handleClick}
+        >
             <div className='icon-border' style={{ background: iconColor }}>
                 {icon}
             </div>
             <div className='info-setup'>
-                <div className='card-title'>
-                    {title}
-                </div>
+                <div className='card-title'>{title}</div>
                 <div className='card-content'>
-                    {desc}
+                    {viewMode === title ? (
+                        modeDesc
+                    ) : (
+                        desc
+                    )}
                 </div>
             </div>
-            <IconButton sx={{ marginRight: '-20px', marginLeft: isMobile() ? '-10px' : '-20px' }}><ChevronRightIcon /></IconButton>
-            {/* <iframe className='iconIframe' style={{ top: '-90px', height: '180px' }} src="https://lottie.host/embed/ebf9c7ed-1283-400e-b364-fea1397b8cbc/D4dorOwRBc.json"></iframe> */}
-        </div>
-    )
-}
+            <IconButton sx={{ marginRight: '-20px', marginLeft: isMobile() ? '-10px' : '-20px' }}>
+                <ChevronRightIcon />
+            </IconButton>
+        </motion.div>
+    );
+};
 
-export default InfoCard
+export default InfoCard;
