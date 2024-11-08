@@ -59,7 +59,7 @@ const languageTexts = {
       '<strong>Designer</strong> de Interfaces.',
       'Entre em <strong>Contato</strong>.',
     ],
-    contactDesc: 'Sejam bem-vindos ao meu portfólio! Eu sou Bruno Leonardi e aqui vocês podem explorar mais sobre mim, meus trabalhos e projetos. Fiquem à vontade para navegar e, caso queiram, entrem em contato comigo pelas opções abaixo. Será um prazer conversar com vocês!',
+    contactDesc: 'Sejam bem-vindos ao meu portfolio! Eu sou Bruno Leonardi e aqui vocês podem explorar mais sobre mim, meus trabalhos e projetos. Fiquem à vontade para navegar e, caso queiram, entrem em contato comigo pelas opções abaixo. Será um prazer conversar com vocês!',
     contactButton: 'Entre em contato',
     initialIintroduction: 'Oi! Sou Bruno',
     introduction: 'Desenvolvedor e designer.',
@@ -211,7 +211,7 @@ function App() {
 
   const contactStyle = {
     transform: currentSection === '2' ? 'rotate(90deg)' : currentSection === '3' ? 'rotate(180deg)' : '',
-    background: currentSection === '2' ? '#d6dbb8' : '',
+    background: currentSection === '2' ? '#e6e9d5' : '',
   }
 
   const scrollToSection = (index) => {

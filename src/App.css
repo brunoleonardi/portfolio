@@ -35,7 +35,8 @@
     top: -100px;
     /* background: #f5f3f3; */
     /* background: #CBD2A4; */
-    background: #e6e9d5;
+    /* background: #e6e9d5; */
+    background: #f4eded;
     /* background: #f4eded; */
     /* background: #d6dbb8; */
     z-index: 1;
@@ -91,9 +92,11 @@
 .contactTitle {
     width: 80%;
     font-size: 40px;
+    font-weight: 400;
 }
 
 .contactTitle span span strong {
+    font-weight: bold;
     color: #222;
 }
 
@@ -608,6 +611,7 @@
 
     .contact {
         /* border-radius: 30% 40% 60% 40%; */
+        background: #f4eded;
         border-radius: 0px 0px 100px 100px;
         margin-bottom: 20px;
         width: 90vw;
