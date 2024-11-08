@@ -439,6 +439,8 @@
     box-shadow: 5px 5px 10px #0000002b;
     /* transition: .4s cubic-bezier(0.19, 1, 0.22, 1); */
     transition: .2s ease;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
 }
 
 .info-card:hover {
@@ -640,7 +642,8 @@
         font-size: 14px;
         justify-content: center;
         align-items: center;
-        gap: 15px;
+        /* gap: 15px; */
+        gap: 2vh;
     }
 
     .contactButton {
@@ -679,34 +682,36 @@
         width: 100%;
         flex-direction: row;
         flex-wrap: wrap;
+        align-items: flex-start;
         justify-content: center;
         gap: 10px;
     }
 
     .info-card {
         height: 50px;
-        width: 45vw;
+        width: 100vw;
         padding: 10px 0px;
         gap: 0px;
         background: #fcfcfb;
-        transition: .2s ease step-start;
+        transition: .06s;
+        user-select: none;
     }
 
     .info-card.hideImg {
-        width: 45vw;
+        width: 90vw;
     }
 
     .info-card.activated {
         z-index: 5;
         box-shadow: none;
-        width: 92vw;
+        width: 90vw;
         color: #fff;
         height: auto;
     }
 
     .info-card.activated .card-content {
         display: flex;
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .info-card.activated .icon-border {
@@ -723,7 +728,7 @@
         width: 30px;
         height: 30px;
         /* margin-left: -10px; */
-        margin-right: 10px;
+        margin-right: 20px;
     }
 
     .icon-border svg {
@@ -737,7 +742,7 @@
     }
 
     .info-setup {
-        width: 50%;
+        width: 70%;
         gap: 5px;
     }
 

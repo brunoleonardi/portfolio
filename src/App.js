@@ -541,14 +541,14 @@ function App() {
                   </div>
                   <div className='infoCardsSetup'>
                     {/* <AnimatePresence> */}
+                    {/* .sort((a, b) => (viewMode === a.title ? 1 : 0) - (viewMode === b.title ? 1 : 0)) // Sort active card to the end */}
+                    {/* { title: languageTexts[language].titles.projects, icon: <AccountTreeOutlinedIcon />, scrollToSection } */}
                     {[
                       { title: languageTexts[language].titles.developer, modeDesc: languageTexts[language].developerDescription, icon: <CodeIcon /> },
                       { title: languageTexts[language].titles.designer, modeDesc: languageTexts[language].designerDescription, icon: <BrushOutlinedIcon /> },
                       { title: languageTexts[language].titles.services, modeDesc: languageTexts[language].servicesDescription, icon: <WorkOutlineOutlinedIcon /> },
                       { title: languageTexts[language].titles.certifications, modeDesc: languageTexts[language].certificationsDescription, icon: <TaskOutlinedIcon /> },
-                      { title: languageTexts[language].titles.projects, icon: <AccountTreeOutlinedIcon />, scrollToSection }
                     ]
-                      .sort((a, b) => (viewMode === a.title ? 1 : 0) - (viewMode === b.title ? 1 : 0)) // Sort active card to the end
                       .map(({ title, icon, modeDesc, scrollToSection }, index) => (
                         <motion.div key={title} layout>
                           <InfoCard
@@ -568,7 +568,7 @@ function App() {
               ) : (
                 <div className='infoCardsSetup'>
                   {/* <AnimatePresence> */}
-                  <div className='titleFont' style={{ width: '200px', textAlign: "center", backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', margin: '20px 0px', fontSize: '35px', color: '#fff', transition: '.4s', position: "absolute", top: '50px', fontWeight: 400 }}>
+                  <div className='titleFont' style={{ width: '200px', textAlign: "center", backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', marginBottom: '20px', fontSize: '35px', color: '#fff', transition: '.4s', position: "absolute", top: '50px', fontWeight: 400 }}>
                     {languageTexts[language].aboutMe}
                   </div>
                   {[
@@ -579,7 +579,7 @@ function App() {
                     { title: languageTexts[language].titles.projects, icon: <AccountTreeOutlinedIcon />, scrollToSection }
                   ]
                     .map(({ title, icon, modeDesc, scrollToSection }, index) => (
-                      <motion.div key={title} layout>
+                      <div key={title} layout>
                         <InfoCard
                           setViewMode={setViewMode}
                           viewMode={viewMode}
@@ -589,7 +589,7 @@ function App() {
                           icon={icon}
                           scrollToSection={scrollToSection}
                         />
-                      </motion.div>
+                      </div>
                     ))}
                   {/* </AnimatePresence> */}
                 </div>
