@@ -692,6 +692,7 @@
         width: 100vw;
         padding: 10px 0px;
         gap: 0px;
+        
         background: #fcfcfb;
         transition: .06s;
         user-select: none;
