@@ -59,9 +59,10 @@ const languageTexts = {
       '<strong>Designer</strong> de Interfaces.',
       'Entre em <strong>Contato</strong>.',
     ],
-    contactDesc: 'Meu nome é Bruno Leonardi, eu sou desenvolvedor há 3 anos, desenvolvo diversos tipos de páginas, buscando estilos modernos e inovadores.',
+    contactDesc: 'Sejam bem-vindos ao meu portfólio! Eu sou Bruno Leonardi e aqui vocês podem explorar mais sobre mim, meus trabalhos e projetos. Fiquem à vontade para navegar e, caso queiram, entrem em contato comigo pelas opções abaixo. Será um prazer conversar com vocês!',
     contactButton: 'Entre em contato',
-    introduction: 'Oi! Sou Bruno, desenvolvedor e designer.',
+    initialIintroduction: 'Oi! Sou Bruno',
+    introduction: 'Desenvolvedor e designer.',
     aboutMe: 'Sobre Mim',
     projects: 'Meus Projetos',
     titles: {
@@ -70,7 +71,7 @@ const languageTexts = {
       services: 'Serviços Oferecidos',
       certifications: 'Certificações e Cursos',
       projects: 'Meus Projetos',
-      desc: 'Clique e Saiba Mais'
+      desc: 'Clique e saiba mais'
     },
     developerDescription: `Sou formado em TI. Comecei minha carreira como desenvolvedor front-end, criando interfaces interativas e trabalhando com mapas dinâmicos para melhorar a visualização de dados geoespaciais. Utilizando tecnologias como HTML, CSS, JavaScript e React, desenvolvo soluções que priorizam a performance e eficiência.`,
     designerDescription: `Buscando aprimorar minhas habilidades, fiz uma pós-graduação em User Experience (UX), onde aprendi sobre princípios de design, heurísticas de usabilidade e como criar interfaces mais intuitivas. Essa formação me permitiu aplicar conceitos sólidos de design, melhorando a experiência do usuário em cada projeto que desenvolvo.`,
@@ -88,11 +89,12 @@ const languageTexts = {
       '<strong>Front-End</strong> Developer.',
       '<strong>Freelance</strong> Developer.',
       '<strong>Interface</strong> Designer.',
-      'Get in <strong>Touch</strong>.',
+      'Let’s <strong>Connect</strong>.',
     ],
-    contactDesc: "My name is Bruno Leonardi, I have been a developer for 3 years, creating various types of pages, aiming for modern and innovative styles.",
-    contactButton: 'Get in touch',
-    introduction: 'Hi! I am Bruno, a developer and designer.',
+    contactDesc: "Welcome to my portfolio! I’m Bruno Leonardi, and here you can learn more about me, my work, and my projects. Feel free to explore, and if you'd like, reach out using the options below. I’d love to hear from you!",
+    contactButton: 'Contact Me',
+    initialIintroduction: 'Hi! I’m Bruno',
+    introduction: 'Developer and designer.',
     aboutMe: 'About Me',
     projects: 'My Projects',
     titles: {
@@ -101,20 +103,21 @@ const languageTexts = {
       services: 'Offered Services',
       certifications: 'Certifications and Courses',
       projects: 'My Projects',
-      desc: 'Click to Learn More'
+      desc: 'Click to know more'
     },
-    developerDescription: `I have a degree in IT. I started my career as a front-end developer, creating interactive interfaces and working with dynamic maps to improve the visualization of geospatial data. Using technologies like HTML, CSS, JavaScript, and React, I develop solutions that prioritize performance and efficiency.`,
-    designerDescription: `Seeking to improve my skills, I pursued a postgraduate degree in User Experience (UX), where I learned about design principles, usability heuristics, and how to create more intuitive interfaces. This training allowed me to apply solid design concepts, enhancing user experience in every project I develop.`,
-    servicesDescription: `Today, I work at a company and also as a freelancer, offering services that always aim to create solutions that balance personality, usability, and efficiency. I am available for the development of interactive interfaces, user experience design, and custom solutions tailored to meet each client's needs.`,
-    certificationsDescription: `I graduated in Systems Analysis and Development from São Judas Tadeu University in 2021. I completed my postgraduate degree in User Experience (UX) in 2024, where I deepened my knowledge in interface design and usability. Additionally, I completed several additional courses in React, JavaScript, CSS, and design, further enhancing my technical skills.`,
+    developerDescription: `I have a degree in IT. I started my career as a front-end developer, building interactive interfaces and working with dynamic maps to improve the visualization of geospatial data. Using technologies like HTML, CSS, JavaScript, and React, I develop solutions that prioritize performance and efficiency.`,
+    designerDescription: `To enhance my skills, I pursued a postgraduate degree in User Experience (UX), where I gained expertise in design principles, usability heuristics, and creating more intuitive interfaces. This training has enabled me to apply solid design concepts, improving the user experience in every project I take on.`,
+    servicesDescription: `Currently, I work at a company and also take on freelance projects, delivering solutions that balance personality, usability, and efficiency. I specialize in developing interactive interfaces, user experience design, and tailor-made solutions to meet my clients' specific needs.`,
+    certificationsDescription: `I graduated in Systems Analysis and Development from São Judas Tadeu University in 2021. In 2024, I completed my postgraduate degree in User Experience (UX), further deepening my knowledge in interface design and usability. Additionally, I’ve completed various courses in React, JavaScript, CSS, and design, honing my technical skills.`,
     tooltips: {
       home: 'Home',
-      projects: 'In my projects, you will notice that for some images, when clicked, a message will indicate that the site is private. This is because it is a restricted service, accessible only with login and password for specific users. Therefore, I have added images that allow detailed visualization: just hover over them to better view the interface details.',
+      projects: 'In my projects, you’ll notice that some images, when clicked, indicate that the site is private. This is because it’s a restricted service, accessible only with specific credentials. To provide a detailed view, I’ve added images you can hover over to explore the interface better.',
     },
     privateSite: `Private Site`,
     privateSiteDesc: `This site is private and cannot be accessed.`
   },
 };
+
 
 
 
@@ -179,11 +182,30 @@ function App() {
       scrollContainer.addEventListener('scroll', handleScroll);
     }
 
+    const handleWheel = (event) => {
+      const scrollContainer = scrollContainerRef.current;
+
+      if (scrollContainer && !scrollContainer.contains(event.target)) {
+        console.log("Scroll detected outside scrollContainer!");
+
+        const { deltaY } = event;
+
+        if (deltaY > 0) {
+          scrollContainer.scrollTop += 1000;
+        } else {
+          scrollContainer.scrollTop -= 1000;
+        }
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel);
+
     return () => {
       observer.disconnect();
       if (scrollContainer) {
         scrollContainer.removeEventListener('scroll', handleScroll);
       }
+      // window.removeEventListener('wheel', handleWheel);
     };
   }, []);
 
@@ -504,6 +526,7 @@ function App() {
                 <div className='defaultPic'>
                   <img src={minhaFoto} alt='myPic'></img>
                 </div>
+                <div className='defaultInitialIntrodution' >{languageTexts[language].initialIintroduction}</div>
                 <div className='defaultIntrodution'>{languageTexts[language].introduction}</div>
               </div>
             </div>
@@ -512,7 +535,7 @@ function App() {
             <div className='infosHub'>
               {isMobile() ? (
                 <div style={{ display: "flex", flexDirection: 'column', justifyContent: 'center', alignItems: "center", transition: ".4s" }}>
-                  <div style={{ width: isMobile() ? '110px' : '200px', textAlign: "center", backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', margin: '20px 0px', fontSize: isMobile() ? '20px' : '35px', color: '#fff', transition: '.4s', position: "absolute", top: isMobile() ? '100px' : '40px' }}>
+                  <div className='titleFont' style={{ width: '110px', textAlign: "center", backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', margin: '20px 0px', fontSize: '20px', color: '#fff', transition: '.4s' }}>
                     {languageTexts[language].aboutMe}
                   </div>
                   <div className='infoCardsSetup'>
@@ -544,7 +567,7 @@ function App() {
               ) : (
                 <div className='infoCardsSetup'>
                   {/* <AnimatePresence> */}
-                  <div style={{ width: '200px', textAlign: "center", backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', margin: '20px 0px', fontSize: '35px', color: '#fff', transition: '.4s', position: "absolute", top: '40px' }}>
+                  <div className='titleFont' style={{ width: '200px', textAlign: "center", backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', margin: '20px 0px', fontSize: '35px', color: '#fff', transition: '.4s', position: "absolute", top: '50px', fontWeight: 400 }}>
                     {languageTexts[language].aboutMe}
                   </div>
                   {[
@@ -579,14 +602,15 @@ function App() {
                   <div className='defaultPic'>
                     <img src={minhaFoto} alt='myPic'></img>
                   </div>
-                  <div className='defaultIntrodution' style={{ fontSize: "35px" }} >{languageTexts[language].introduction}</div>
+                  <div className='defaultInitialIntrodution' >{languageTexts[language].initialIintroduction}</div>
+                  <div className='defaultIntrodution' >{languageTexts[language].introduction}</div>
                 </div>
               )}
             </div>
           </div>
           <div data-index={!isMobile() ? "2" : "3"} ref={(el) => !isMobile() ? (sectionRefs.current[1] = el) : (sectionRefs.current[2] = el)} className="section">
             <div className='projects'>
-              <div style={{ backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', marginBottom: '20px', fontSize: isMobile() ? '20px' : '30px' }}>
+              <div className='titleFont' style={{ backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', marginBottom: '20px', fontSize: isMobile() ? '20px' : '30px', fontWeight: isMobile() ? 700 : 400 }}>
                 {languageTexts[language].projects}
                 {!isMobile() && (
                   <Tooltip
@@ -609,257 +633,259 @@ function App() {
                 )}
               </div>
               {/* First Swiper */}
-              <Swiper
-                grabCursor={true}
-                // centeredSlides={true}
-                slidesPerView={isMobile() ? 2 : 4}
-                loop={true}
-                coverflowEffect={{
-                  rotate: 50,
-                  stretch: 0,
-                  depth: 100,
-                  modifier: 1,
-                  slideShadows: true,
-                }}
-                autoplay={{
-                  delay: 3000,
-                  disableOnInteraction: false,
-                  reverseDirection: true,
-                }}
-                initialSlide={5}
-                pagination={{ clickable: true }}
-                modules={[EffectCoverflow, Pagination, Autoplay]}
-                className="mySwiper"
-                onSwiper={(swiper) => {
-                  swiper1Ref.current = swiper;
-                }}
-              >
-                {array1.map((img, index) => (
-                  <SwiperSlide key={index}>
-                    <Tooltip
-                      title={
-                        <div>
-                          <img
-                            src={img}
-                            style={{
-                              width: '40vw',
-                              height: 'auto',
-                            }}
-                            alt={`slide-${index}`}
-                          />
-                        </div>
-                      }
-                      PopperProps={{
-                        modifiers: [
-                          {
-                            name: 'flip',
-                            options: {
-                              fallbackPlacements: [],
+              <div className='projectSwipers'>
+                <Swiper
+                  grabCursor={true}
+                  // centeredSlides={true}
+                  slidesPerView={isMobile() ? 2 : 4}
+                  loop={true}
+                  coverflowEffect={{
+                    rotate: 50,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 1,
+                    slideShadows: true,
+                  }}
+                  autoplay={{
+                    delay: 3000,
+                    disableOnInteraction: false,
+                    reverseDirection: true,
+                  }}
+                  initialSlide={5}
+                  pagination={{ clickable: true }}
+                  modules={[EffectCoverflow, Pagination, Autoplay]}
+                  className="mySwiper"
+                  onSwiper={(swiper) => {
+                    swiper1Ref.current = swiper;
+                  }}
+                >
+                  {array1.map((img, index) => (
+                    <SwiperSlide key={index}>
+                      <Tooltip
+                        title={
+                          <div>
+                            <img
+                              src={img}
+                              style={{
+                                width: '40vw',
+                                height: 'auto',
+                              }}
+                              alt={`slide-${index}`}
+                            />
+                          </div>
+                        }
+                        PopperProps={{
+                          modifiers: [
+                            {
+                              name: 'flip',
+                              options: {
+                                fallbackPlacements: [],
+                              },
+                            },
+                            {
+                              name: 'zIndex',
+                              options: {
+                                zIndex: 9999,
+                              },
+                            },
+                          ],
+                          sx: {
+                            display: isMobile() ? 'none' : 'flex',
+                            pointerEvents: 'none', // Add this line
+                            [`& .MuiTooltip-tooltip`]: {
+                              fontSize: '12px',
+                              padding: '3px',
+                              paddingBottom: '1px',
+                              background: '#222',
+                              maxWidth: 'none',
                             },
                           },
-                          {
-                            name: 'zIndex',
-                            options: {
-                              zIndex: 9999,
-                            },
-                          },
-                        ],
-                        sx: {
-                          display: isMobile() ? 'none' : 'flex',
-                          pointerEvents: 'none', // Add this line
-                          [`& .MuiTooltip-tooltip`]: {
-                            fontSize: '12px',
-                            padding: '3px',
-                            paddingBottom: '1px',
-                            background: '#222',
-                            maxWidth: 'none',
-                          },
-                        },
-                      }}
-                      placement="left"
-                    >
-                      <img
-                        src={img}
-                        alt={`slide-${index}`}
-                        className="swiper-image"
-                        onClick={() => handleImageClick(img)}
-                        style={{ cursor: 'pointer' }}
-                        onMouseEnter={() => swiper1Ref.current.autoplay.stop()}
-                        onMouseLeave={() => swiper1Ref.current.autoplay.start()}
-                      />
-                    </Tooltip>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+                        }}
+                        placement="left"
+                      >
+                        <img
+                          src={img}
+                          alt={`slide-${index}`}
+                          className="swiper-image"
+                          onClick={() => handleImageClick(img)}
+                          style={{ cursor: 'pointer' }}
+                          onMouseEnter={() => swiper1Ref.current.autoplay.stop()}
+                          onMouseLeave={() => swiper1Ref.current.autoplay.start()}
+                        />
+                      </Tooltip>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
 
-              {/* Second Swiper */}
-              <Swiper
-                grabCursor={true}
-                centeredSlides={true}
-                style={{ paddingRight: '15px' }}
-                slidesPerView={isMobile() ? 2 : 4}
-                loop={true}
-                coverflowEffect={{
-                  rotate: 50,
-                  stretch: 0,
-                  depth: 100,
-                  modifier: 1,
-                  slideShadows: true,
-                }}
-                autoplay={{
-                  delay: 3000,
-                  disableOnInteraction: false,
-                }}
-                pagination={{ clickable: true }}
-                modules={[EffectCoverflow, Pagination, Autoplay]}
-                className="mySwiper"
-                onSwiper={(swiper) => {
-                  swiper2Ref.current = swiper;
-                }}
-              >
-                {array2.map((img, index) => (
-                  <SwiperSlide key={index}>
-                    <Tooltip
-                      title={
-                        <div>
-                          <img
-                            src={img}
-                            style={{
-                              width: '40vw',
-                              height: 'auto',
-                            }}
-                            alt={`slide-${index}`}
-                          />
-                        </div>
-                      }
-                      PopperProps={{
-                        modifiers: [
-                          {
-                            name: 'flip',
-                            options: {
-                              fallbackPlacements: [],
+                {/* Second Swiper */}
+                <Swiper
+                  grabCursor={true}
+                  centeredSlides={true}
+                  initialSlide={3}
+                  // style={{ paddingRight: '15px' }}
+                  slidesPerView={isMobile() ? 2 : 4}
+                  loop={true}
+                  coverflowEffect={{
+                    rotate: 50,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 1,
+                    slideShadows: true,
+                  }}
+                  autoplay={{
+                    delay: 3000,
+                    disableOnInteraction: false,
+                  }}
+                  pagination={{ clickable: true }}
+                  modules={[EffectCoverflow, Pagination, Autoplay]}
+                  className="mySwiper"
+                  onSwiper={(swiper) => {
+                    swiper2Ref.current = swiper;
+                  }}
+                >
+                  {array2.map((img, index) => (
+                    <SwiperSlide key={index}>
+                      <Tooltip
+                        title={
+                          <div>
+                            <img
+                              src={img}
+                              style={{
+                                width: '40vw',
+                                height: 'auto',
+                              }}
+                              alt={`slide-${index}`}
+                            />
+                          </div>
+                        }
+                        PopperProps={{
+                          modifiers: [
+                            {
+                              name: 'flip',
+                              options: {
+                                fallbackPlacements: [],
+                              },
+                            },
+                            {
+                              name: 'zIndex',
+                              options: {
+                                zIndex: 9999,
+                              },
+                            },
+                          ],
+                          sx: {
+                            display: isMobile() ? 'none' : 'flex',
+                            pointerEvents: 'none', // Add this line
+                            [`& .MuiTooltip-tooltip`]: {
+                              fontSize: '12px',
+                              padding: '3px',
+                              paddingBottom: '1px',
+                              background: '#222',
+                              maxWidth: 'none',
                             },
                           },
-                          {
-                            name: 'zIndex',
-                            options: {
-                              zIndex: 9999,
-                            },
-                          },
-                        ],
-                        sx: {
-                          display: isMobile() ? 'none' : 'flex',
-                          pointerEvents: 'none', // Add this line
-                          [`& .MuiTooltip-tooltip`]: {
-                            fontSize: '12px',
-                            padding: '3px',
-                            paddingBottom: '1px',
-                            background: '#222',
-                            maxWidth: 'none',
-                          },
-                        },
-                      }}
-                      placement="left"
-                    >
-                      <img
-                        src={img}
-                        alt={`slide-${index}`}
-                        className="swiper-image"
-                        onClick={() => handleImageClick(img)}
-                        style={{ cursor: 'pointer' }}
-                        onMouseEnter={() => swiper2Ref.current.autoplay.stop()}
-                        onMouseLeave={() => swiper2Ref.current.autoplay.start()}
-                      />
-                    </Tooltip>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+                        }}
+                        placement="left"
+                      >
+                        <img
+                          src={img}
+                          alt={`slide-${index}`}
+                          className="swiper-image"
+                          onClick={() => handleImageClick(img)}
+                          style={{ cursor: 'pointer' }}
+                          onMouseEnter={() => swiper2Ref.current.autoplay.stop()}
+                          onMouseLeave={() => swiper2Ref.current.autoplay.start()}
+                        />
+                      </Tooltip>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
 
-              {/* Third Swiper */}
-              <Swiper
-                grabCursor={true}
-                // centeredSlides={true}
-                slidesPerView={isMobile() ? 2 : 4}
-                loop={true}
-                coverflowEffect={{
-                  rotate: 50,
-                  stretch: 0,
-                  depth: 100,
-                  modifier: 1,
-                  slideShadows: true,
-                }}
-                autoplay={{
-                  delay: 3000,
-                  disableOnInteraction: false,
-                  reverseDirection: true,
-                }}
-                initialSlide={5}
-                pagination={{ clickable: true }}
-                modules={[EffectCoverflow, Pagination, Autoplay]}
-                className="mySwiper"
-                onSwiper={(swiper) => {
-                  swiper3Ref.current = swiper;
-                }}
-              >
-                {array3.map((img, index) => (
-                  <SwiperSlide key={index}>
-                    <Tooltip
-                      title={
-                        <div>
-                          <img
-                            src={img}
-                            style={{
-                              width: '40vw',
-                              height: 'auto',
-                            }}
-                            alt={`slide-${index}`}
-                          />
-                        </div>
-                      }
-                      PopperProps={{
-                        modifiers: [
-                          {
-                            name: 'flip',
-                            options: {
-                              fallbackPlacements: [],
+                {/* Third Swiper */}
+                <Swiper
+                  grabCursor={true}
+                  // centeredSlides={true}
+                  slidesPerView={isMobile() ? 2 : 4}
+                  loop={true}
+                  coverflowEffect={{
+                    rotate: 50,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 1,
+                    slideShadows: true,
+                  }}
+                  autoplay={{
+                    delay: 3000,
+                    disableOnInteraction: false,
+                    reverseDirection: true,
+                  }}
+                  initialSlide={5}
+                  pagination={{ clickable: true }}
+                  modules={[EffectCoverflow, Pagination, Autoplay]}
+                  className="mySwiper"
+                  onSwiper={(swiper) => {
+                    swiper3Ref.current = swiper;
+                  }}
+                >
+                  {array3.map((img, index) => (
+                    <SwiperSlide key={index}>
+                      <Tooltip
+                        title={
+                          <div>
+                            <img
+                              src={img}
+                              style={{
+                                width: '40vw',
+                                height: 'auto',
+                              }}
+                              alt={`slide-${index}`}
+                            />
+                          </div>
+                        }
+                        PopperProps={{
+                          modifiers: [
+                            {
+                              name: 'flip',
+                              options: {
+                                fallbackPlacements: [],
+                              },
+                            },
+                            {
+                              name: 'zIndex',
+                              options: {
+                                zIndex: 9999,
+                              },
+                            },
+                          ],
+                          sx: {
+                            display: isMobile() ? 'none' : 'flex',
+                            pointerEvents: 'none', // Add this line
+                            [`& .MuiTooltip-tooltip`]: {
+                              fontSize: '12px',
+                              padding: '3px',
+                              paddingBottom: '1px',
+                              background: '#222',
+                              maxWidth: 'none',
                             },
                           },
-                          {
-                            name: 'zIndex',
-                            options: {
-                              zIndex: 9999,
-                            },
-                          },
-                        ],
-                        sx: {
-                          display: isMobile() ? 'none' : 'flex',
-                          pointerEvents: 'none', // Add this line
-                          [`& .MuiTooltip-tooltip`]: {
-                            fontSize: '12px',
-                            padding: '3px',
-                            paddingBottom: '1px',
-                            background: '#222',
-                            maxWidth: 'none',
-                          },
-                        },
-                      }}
-                      placement="left"
-                    >
-                      <img
-                        src={img}
-                        alt={`slide-${index}`}
-                        className="swiper-image"
-                        onClick={() => handleImageClick(img)}
-                        style={{ cursor: 'pointer' }}
-                        onMouseEnter={() => swiper3Ref.current.autoplay.stop()}
-                        onMouseLeave={() => swiper3Ref.current.autoplay.start()}
-                      />
-                    </Tooltip>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+                        }}
+                        placement="left"
+                      >
+                        <img
+                          src={img}
+                          alt={`slide-${index}`}
+                          className="swiper-image"
+                          onClick={() => handleImageClick(img)}
+                          style={{ cursor: 'pointer' }}
+                          onMouseEnter={() => swiper3Ref.current.autoplay.stop()}
+                          onMouseLeave={() => swiper3Ref.current.autoplay.start()}
+                        />
+                      </Tooltip>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
             </div>
-
           </div>
         </div>
       </div>
