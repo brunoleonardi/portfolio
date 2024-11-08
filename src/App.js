@@ -43,13 +43,7 @@ import 'swiper/css/pagination';
 import { EffectCoverflow, Pagination, Autoplay } from 'swiper/modules';
 import { styled } from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
-
-export const isMobile = () => {
-  const isMobileDevice = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(
-    navigator.userAgent
-  );
-  return isMobileDevice
-}
+import { useIsMobile } from './components/IsMobile';
 
 const languageTexts = {
   pt: {
@@ -124,6 +118,8 @@ const languageTexts = {
 
 
 function App() {
+  const isMobile = useIsMobile();
+
   const scrollContainerRef = useRef([]);
   const sectionRefs = useRef([]);
   const swiper1Ref = useRef(null);
@@ -131,7 +127,7 @@ function App() {
   const swiper3Ref = useRef(null);
   const [language, setLanguage] = useState('pt');
   const [currentSection, setCurrentSection] = useState(null);
-  const [viewMode, setViewMode] = useState(isMobile() ? languageTexts[language].titles.developer : undefined);
+  const [viewMode, setViewMode] = useState(isMobile ? languageTexts[language].titles.developer : undefined);
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(true)
 
@@ -186,8 +182,6 @@ function App() {
       const scrollContainer = scrollContainerRef.current;
 
       if (scrollContainer && !scrollContainer.contains(event.target)) {
-        console.log("Scroll detected outside scrollContainer!");
-
         const { deltaY } = event;
 
         if (deltaY > 0) {
@@ -210,7 +204,7 @@ function App() {
   }, []);
 
   const contactStyle = {
-    transform: !isMobile() ? currentSection === '2' ? 'rotate(90deg)' : currentSection === '3' ? 'rotate(180deg)' : '' : '',
+    transform: !isMobile ? currentSection === '2' ? 'rotate(90deg)' : currentSection === '3' ? 'rotate(180deg)' : '' : '',
     background: currentSection === '2' ? '#e6e9d5' : '',
   }
 
@@ -316,14 +310,39 @@ function App() {
     }
   };
 
+  const calculateSlidesPerView = () => {
+    if (window.innerWidth > 1000) {
+      return 4;
+    } else if (window.innerWidth > 700) {
+      return 3;
+    } else {
+      return 2;
+    }
+  };
+
+  const [slidesPerView, setSlidesPerView] = useState(calculateSlidesPerView());
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSlidesPerView(calculateSlidesPerView());
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Clean up event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <div className='home-page'>
-      {!isMobile() && (
+      {!isMobile && (
         <div style={{ position: "absolute", width: "100%", height: "100%" }}>
           <TerrainScene />
         </div>
       )}
-      {!isMobile() && (
+      {!isMobile && (
         <>
           <div style={{ width: '50vw' }}></div>
           <div className='contact' style={contactStyle} />
@@ -349,7 +368,7 @@ function App() {
           </div>
         </>
       )}
-      {isMobile() ? (
+      {isMobile ? (
         <div className='navigation-hub'>
           <div style={{ display: 'flex', alignItems: "center", padding: '0px 10px' }}>
             <img style={{ height: '10px', marginRight: '5px' }} src='https://cdn.britannica.com/33/4833-050-F6E415FE/Flag-United-States-of-America.jpg' alt='brazilFlag'></img>
@@ -499,7 +518,7 @@ function App() {
       )}
       <div className='info-area'>
         <div className="scroll-container" ref={scrollContainerRef}>
-          {isMobile() && (
+          {isMobile && (
             <div data-index="1" ref={(el) => (sectionRefs.current[0] = el)} className="section" style={{ flexDirection: "column", justifyContent: 'initial' }}>
               <div className='contact' style={contactStyle}>
                 <div className='contactInfos'>
@@ -532,9 +551,9 @@ function App() {
               </div>
             </div>
           )}
-          <div data-index={!isMobile() ? "1" : "2"} ref={(el) => !isMobile() ? (sectionRefs.current[0] = el) : (sectionRefs.current[1] = el)} className="section cards-section">
+          <div data-index={!isMobile ? "1" : "2"} ref={(el) => !isMobile ? (sectionRefs.current[0] = el) : (sectionRefs.current[1] = el)} className="section cards-section">
             <div className='infosHub'>
-              {isMobile() ? (
+              {isMobile ? (
                 <div style={{ display: "flex", flexDirection: 'column', justifyContent: 'center', alignItems: "center", transition: ".4s" }}>
                   <div className='titleFont' style={{ width: '110px', textAlign: "center", backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', margin: '20px 0px', fontSize: '20px', color: '#fff', transition: '.4s' }}>
                     {languageTexts[language].aboutMe}
@@ -568,7 +587,7 @@ function App() {
               ) : (
                 <div className='infoCardsSetup'>
                   {/* <AnimatePresence> */}
-                  <div className='titleFont' style={{ width: '200px', textAlign: "center", backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', marginBottom: '20px', fontSize: '35px', color: '#fff', transition: '.4s', position: "absolute", top: '50px', fontWeight: 400 }}>
+                  <div className='titleFont' style={{ width: '200px', textAlign: "center", backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', marginBottom: '10px', fontSize: '35px', color: '#fff', transition: '.4s', marginTop: '-20%', fontWeight: 400 }}>
                     {languageTexts[language].aboutMe}
                   </div>
                   {[
@@ -579,7 +598,7 @@ function App() {
                     { title: languageTexts[language].titles.projects, icon: <AccountTreeOutlinedIcon />, scrollToSection }
                   ]
                     .map(({ title, icon, modeDesc, scrollToSection }, index) => (
-                      <div key={title} layout>
+                      <div key={title}>
                         <InfoCard
                           setViewMode={setViewMode}
                           viewMode={viewMode}
@@ -596,7 +615,7 @@ function App() {
               )}
               {viewMode ? (
                 <></>
-              ) : isMobile() ? (
+              ) : isMobile ? (
                 <div></div>
               ) : (
                 <div className='defaultHub'>
@@ -609,11 +628,11 @@ function App() {
               )}
             </div>
           </div>
-          <div data-index={!isMobile() ? "2" : "3"} ref={(el) => !isMobile() ? (sectionRefs.current[1] = el) : (sectionRefs.current[2] = el)} className="section">
+          <div data-index={!isMobile ? "2" : "3"} ref={(el) => !isMobile ? (sectionRefs.current[1] = el) : (sectionRefs.current[2] = el)} className="section">
             <div className='projects'>
-              <div className='titleFont' style={{ backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', marginBottom: '20px', fontSize: isMobile() ? '20px' : '30px', fontWeight: isMobile() ? 700 : 400 }}>
+              <div className='titleFont' style={{ backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '30px', marginBottom: '20px', fontSize: isMobile ? '20px' : '30px', fontWeight: isMobile ? 700 : 400 }}>
                 {languageTexts[language].projects}
-                {!isMobile() && (
+                {!isMobile && (
                   <Tooltip
                     title={languageTexts[language].tooltips.projects}
                     PopperProps={{
@@ -638,7 +657,7 @@ function App() {
                 <Swiper
                   grabCursor={true}
                   // centeredSlides={true}
-                  slidesPerView={isMobile() ? 2 : 4}
+                  slidesPerView={slidesPerView}
                   loop={true}
                   coverflowEffect={{
                     rotate: 50,
@@ -691,7 +710,7 @@ function App() {
                             },
                           ],
                           sx: {
-                            display: isMobile() ? 'none' : 'flex',
+                            display: isMobile ? 'none' : 'flex',
                             pointerEvents: 'none', // Add this line
                             [`& .MuiTooltip-tooltip`]: {
                               fontSize: '12px',
@@ -724,7 +743,7 @@ function App() {
                   centeredSlides={true}
                   initialSlide={3}
                   // style={{ paddingRight: '15px' }}
-                  slidesPerView={isMobile() ? 2 : 4}
+                  slidesPerView={slidesPerView}
                   loop={true}
                   coverflowEffect={{
                     rotate: 50,
@@ -775,7 +794,7 @@ function App() {
                             },
                           ],
                           sx: {
-                            display: isMobile() ? 'none' : 'flex',
+                            display: isMobile ? 'none' : 'flex',
                             pointerEvents: 'none', // Add this line
                             [`& .MuiTooltip-tooltip`]: {
                               fontSize: '12px',
@@ -806,7 +825,7 @@ function App() {
                 <Swiper
                   grabCursor={true}
                   // centeredSlides={true}
-                  slidesPerView={isMobile() ? 2 : 4}
+                  slidesPerView={slidesPerView}
                   loop={true}
                   coverflowEffect={{
                     rotate: 50,
@@ -859,7 +878,7 @@ function App() {
                             },
                           ],
                           sx: {
-                            display: isMobile() ? 'none' : 'flex',
+                            display: isMobile ? 'none' : 'flex',
                             pointerEvents: 'none', // Add this line
                             [`& .MuiTooltip-tooltip`]: {
                               fontSize: '12px',

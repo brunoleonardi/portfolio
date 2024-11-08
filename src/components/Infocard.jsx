@@ -2,12 +2,14 @@ import { motion } from 'framer-motion';
 import { IconButton } from "@mui/material";
 import React from "react";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { isMobile } from "../App";
+import { useIsMobile } from './IsMobile';
 
 const InfoCard = ({ scrollToSection, setViewMode, viewMode, title, icon, iconColor, desc, modeDesc }) => {
+    const isMobile = useIsMobile();
+
     const handleClick = () => {
         if (scrollToSection) {
-            scrollToSection(isMobile() ? 2 : 1);
+            scrollToSection(isMobile ? 2 : 1);
             return;
         }
         setViewMode(title);
@@ -36,7 +38,7 @@ const InfoCard = ({ scrollToSection, setViewMode, viewMode, title, icon, iconCol
                     )}
                 </div>
             </div>
-            <IconButton sx={{ marginRight: '-20px', marginLeft: isMobile() ? '-10px' : '-20px' }}>
+            <IconButton sx={{ marginRight: '-20px', marginLeft: isMobile ? '-10px' : '-20px' }}>
                 <ChevronRightIcon />
             </IconButton>
         </motion.div>
