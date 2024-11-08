@@ -210,7 +210,7 @@ function App() {
   }, []);
 
   const contactStyle = {
-    transform: currentSection === '2' ? 'rotate(90deg)' : currentSection === '3' ? 'rotate(180deg)' : '',
+    transform: !isMobile() ? currentSection === '2' ? 'rotate(90deg)' : currentSection === '3' ? 'rotate(180deg)' : '' : '',
     background: currentSection === '2' ? '#e6e9d5' : '',
   }
 
@@ -501,7 +501,7 @@ function App() {
         <div className="scroll-container" ref={scrollContainerRef}>
           {isMobile() && (
             <div data-index="1" ref={(el) => (sectionRefs.current[0] = el)} className="section" style={{ flexDirection: "column", justifyContent: 'initial' }}>
-              <div className='contact'>
+              <div className='contact' style={contactStyle}>
                 <div className='contactInfos'>
                   <div className='contactTitle'>
                     <ReactTyped
