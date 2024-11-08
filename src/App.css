@@ -27,37 +27,55 @@
 }
 
 .contact {
-    width: 48vw;
-    height: 48vw;
+    width: 44vw;
+    height: 44vw;
     position: fixed;
+    /* Necessário para que z-index funcione */
     left: -100px;
     top: -100px;
-    /* background: #46555e; */
-    background: #f0ebeb;
-    /* background: #083450; */
-    /* background: #efd2b7; */
-    /* background: #0a3d18; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 60px;
+    /* background: #f5f3f3; */
+    /* background: #CBD2A4; */
+    background: #e6e9d5;
+    /* background: #f4eded; */
+    /* background: #d6dbb8; */
     z-index: 1;
-    /* border-radius: 0px 1000px 50% 0px; */
-    /* border-radius: 50% 1000px 50% 50%; */
+    /* Certifique-se de que o elemento principal tenha um z-index maior que os pseudo-elementos */
     border-radius: 40% 50% 40% 50%;
     transition: .8s;
-    overflow: hidden;
     box-shadow: 5px 5px 50px #0000002b;
-    /* box-shadow: -70px -70px 70px #34424b inset; */
-    /* box-shadow: -70px -70px 70px #ffffff57 inset; */
+    overflow: hidden;
 }
 
-.contactInfos {
-    /* color: #fff; */
+/* .contact::before {
+    content: '';
     position: absolute;
-    width: 42vw;
-    height: 42vw;
+    background-color: #CBD2A4;
+    border-radius: 50%;
+    width: 19vw;
+    height: 19vw;
+    top: -5vh;
+    right: 2vw;
+    z-index: -1;
+    box-shadow: 0px 0px 50px #0000002b;
+} */
+
+/* .contact::after {
+    content: '';
+    position: absolute;
+    background-color: #CBD2A4;
+    border-radius: 50%;
+    width: 14vw;
+    height: 14vw;
+    top: 11vh;
+    right: -4vw;
+    z-index: -2;
+    box-shadow: 0px 0px 50px #0000002b;
+} */
+
+.contactInfos {
+    position: absolute;
+    width: 38vw;
+    height: 38vw;
     color: #000;
     left: 0px;
     top: 0px;
@@ -100,20 +118,20 @@
     cursor: pointer;
     font-size: 17px;
     z-index: 1;
-    color: var(--color);
-    /* border: 2px solid var(--color); */
+    color: #555;
+    font-weight: bold;
     border: none;
     box-shadow: 2px 2px 4px #0000003c, -6px -6px 6px #ffffff3c;
     border-radius: 30px;
     position: relative;
-    background: #e9e4e4;
+    background: #dfe4c5;
     transition: .3s;
 }
 
 .contactButton::before {
     position: absolute;
     content: "";
-    background: #dbdbdb;
+    background: #d4dabe;
     width: 300px;
     height: 250px;
     z-index: -1;
@@ -121,7 +139,7 @@
 }
 
 .contactButton:hover {
-    color: #222;
+    color: #000;
     box-shadow: 5px 5px 5px #0000003c;
     /* font-size: 19px; */
 }
@@ -406,7 +424,8 @@
     width: 25vw;
     height: 90px;
     cursor: pointer;
-    background: #f4eded;
+    /* background: #f4eded; */
+    background: #eceee4;
     /* padding-right: 20px; */
     gap: 30px;
     border-radius: 10px;
@@ -420,7 +439,7 @@
 }
 
 .info-card:hover {
-    background: #ddd;
+    background: #d1d3c8;
 }
 
 .info-card.hideImg {
@@ -575,7 +594,7 @@
         bottom: 10px;
         height: 40px;
         gap: 10px;
-        border-radius: 14px;
+        border-radius: 12px;
         transform: translateX(50%);
     }
 
@@ -610,6 +629,7 @@
         width: 80%;
         max-height: 20px;
         font-size: 20px;
+        margin-top: 20px;
     }
 
     .contactDesc {
@@ -664,6 +684,7 @@
         width: 45vw;
         padding: 10px 0px;
         gap: 0px;
+        background: #fcfcfb;
         transition: .2s ease step-start;
     }
 
@@ -708,7 +729,7 @@
     .infosHub {
         flex-direction: column;
         gap: 20px;
-        transform: translateY(-4%);
+        transform: translateY(-7%);
     }
 
     .info-setup {

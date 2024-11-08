@@ -211,6 +211,7 @@ function App() {
 
   const contactStyle = {
     transform: currentSection === '2' ? 'rotate(90deg)' : currentSection === '3' ? 'rotate(180deg)' : '',
+    background: currentSection === '2' ? '#d6dbb8' : '',
   }
 
   const scrollToSection = (index) => {
